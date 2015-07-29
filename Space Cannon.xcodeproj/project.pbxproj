@@ -1,0 +1,453 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AAF95E5F1B6922EF0089C9C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF95E5E1B6922EF0089C9C9 /* main.m */; };
+		AAF95E621B6922EF0089C9C9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF95E611B6922EF0089C9C9 /* AppDelegate.m */; };
+		AAF95E651B6922EF0089C9C9 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF95E641B6922EF0089C9C9 /* GameScene.m */; };
+		AAF95E671B6922EF0089C9C9 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = AAF95E661B6922EF0089C9C9 /* GameScene.sks */; };
+		AAF95E6A1B6922EF0089C9C9 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF95E691B6922EF0089C9C9 /* GameViewController.m */; };
+		AAF95E6D1B6922EF0089C9C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAF95E6B1B6922EF0089C9C9 /* Main.storyboard */; };
+		AAF95E6F1B6922EF0089C9C9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAF95E6E1B6922EF0089C9C9 /* Images.xcassets */; };
+		AAF95E721B6922EF0089C9C9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAF95E701B6922EF0089C9C9 /* LaunchScreen.xib */; };
+		AAF95E7E1B6922EF0089C9C9 /* Space_CannonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF95E7D1B6922EF0089C9C9 /* Space_CannonTests.m */; };
+		AAF95E881B69232C0089C9C9 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = AAF95E871B69232C0089C9C9 /* Entitlements.plist */; };
+		AAF95E8A1B6926F30089C9C9 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = AAF95E891B6926F30089C9C9 /* Images */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AAF95E781B6922EF0089C9C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AAF95E511B6922EF0089C9C9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AAF95E581B6922EF0089C9C9;
+			remoteInfo = "Space Cannon";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AAF95E591B6922EF0089C9C9 /* Space Cannon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Space Cannon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAF95E5D1B6922EF0089C9C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAF95E5E1B6922EF0089C9C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AAF95E601B6922EF0089C9C9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AAF95E611B6922EF0089C9C9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AAF95E631B6922EF0089C9C9 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		AAF95E641B6922EF0089C9C9 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
+		AAF95E661B6922EF0089C9C9 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		AAF95E681B6922EF0089C9C9 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		AAF95E691B6922EF0089C9C9 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		AAF95E6C1B6922EF0089C9C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AAF95E6E1B6922EF0089C9C9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AAF95E711B6922EF0089C9C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		AAF95E771B6922EF0089C9C9 /* Space CannonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Space CannonTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAF95E7C1B6922EF0089C9C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAF95E7D1B6922EF0089C9C9 /* Space_CannonTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Space_CannonTests.m; sourceTree = "<group>"; };
+		AAF95E871B69232C0089C9C9 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		AAF95E891B6926F30089C9C9 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = "Space Cannon/Images"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AAF95E561B6922EF0089C9C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAF95E741B6922EF0089C9C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AAF95E501B6922EF0089C9C9 = {
+			isa = PBXGroup;
+			children = (
+				AAF95E5B1B6922EF0089C9C9 /* Space Cannon */,
+				AAF95E891B6926F30089C9C9 /* Images */,
+				AAF95E7A1B6922EF0089C9C9 /* Space CannonTests */,
+				AAF95E5A1B6922EF0089C9C9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AAF95E5A1B6922EF0089C9C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AAF95E591B6922EF0089C9C9 /* Space Cannon.app */,
+				AAF95E771B6922EF0089C9C9 /* Space CannonTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AAF95E5B1B6922EF0089C9C9 /* Space Cannon */ = {
+			isa = PBXGroup;
+			children = (
+				AAF95E601B6922EF0089C9C9 /* AppDelegate.h */,
+				AAF95E611B6922EF0089C9C9 /* AppDelegate.m */,
+				AAF95E631B6922EF0089C9C9 /* GameScene.h */,
+				AAF95E641B6922EF0089C9C9 /* GameScene.m */,
+				AAF95E661B6922EF0089C9C9 /* GameScene.sks */,
+				AAF95E681B6922EF0089C9C9 /* GameViewController.h */,
+				AAF95E691B6922EF0089C9C9 /* GameViewController.m */,
+				AAF95E6B1B6922EF0089C9C9 /* Main.storyboard */,
+				AAF95E6E1B6922EF0089C9C9 /* Images.xcassets */,
+				AAF95E701B6922EF0089C9C9 /* LaunchScreen.xib */,
+				AAF95E5C1B6922EF0089C9C9 /* Supporting Files */,
+			);
+			path = "Space Cannon";
+			sourceTree = "<group>";
+		};
+		AAF95E5C1B6922EF0089C9C9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AAF95E5D1B6922EF0089C9C9 /* Info.plist */,
+				AAF95E871B69232C0089C9C9 /* Entitlements.plist */,
+				AAF95E5E1B6922EF0089C9C9 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AAF95E7A1B6922EF0089C9C9 /* Space CannonTests */ = {
+			isa = PBXGroup;
+			children = (
+				AAF95E7D1B6922EF0089C9C9 /* Space_CannonTests.m */,
+				AAF95E7B1B6922EF0089C9C9 /* Supporting Files */,
+			);
+			path = "Space CannonTests";
+			sourceTree = "<group>";
+		};
+		AAF95E7B1B6922EF0089C9C9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AAF95E7C1B6922EF0089C9C9 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AAF95E581B6922EF0089C9C9 /* Space Cannon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAF95E811B6922EF0089C9C9 /* Build configuration list for PBXNativeTarget "Space Cannon" */;
+			buildPhases = (
+				AAF95E551B6922EF0089C9C9 /* Sources */,
+				AAF95E561B6922EF0089C9C9 /* Frameworks */,
+				AAF95E571B6922EF0089C9C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Space Cannon";
+			productName = "Space Cannon";
+			productReference = AAF95E591B6922EF0089C9C9 /* Space Cannon.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AAF95E761B6922EF0089C9C9 /* Space CannonTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAF95E841B6922EF0089C9C9 /* Build configuration list for PBXNativeTarget "Space CannonTests" */;
+			buildPhases = (
+				AAF95E731B6922EF0089C9C9 /* Sources */,
+				AAF95E741B6922EF0089C9C9 /* Frameworks */,
+				AAF95E751B6922EF0089C9C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AAF95E791B6922EF0089C9C9 /* PBXTargetDependency */,
+			);
+			name = "Space CannonTests";
+			productName = "Space CannonTests";
+			productReference = AAF95E771B6922EF0089C9C9 /* Space CannonTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AAF95E511B6922EF0089C9C9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = Fenkins;
+				TargetAttributes = {
+					AAF95E581B6922EF0089C9C9 = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+					AAF95E761B6922EF0089C9C9 = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = AAF95E581B6922EF0089C9C9;
+					};
+				};
+			};
+			buildConfigurationList = AAF95E541B6922EF0089C9C9 /* Build configuration list for PBXProject "Space Cannon" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AAF95E501B6922EF0089C9C9;
+			productRefGroup = AAF95E5A1B6922EF0089C9C9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AAF95E581B6922EF0089C9C9 /* Space Cannon */,
+				AAF95E761B6922EF0089C9C9 /* Space CannonTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AAF95E571B6922EF0089C9C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAF95E721B6922EF0089C9C9 /* LaunchScreen.xib in Resources */,
+				AAF95E6F1B6922EF0089C9C9 /* Images.xcassets in Resources */,
+				AAF95E671B6922EF0089C9C9 /* GameScene.sks in Resources */,
+				AAF95E881B69232C0089C9C9 /* Entitlements.plist in Resources */,
+				AAF95E8A1B6926F30089C9C9 /* Images in Resources */,
+				AAF95E6D1B6922EF0089C9C9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAF95E751B6922EF0089C9C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AAF95E551B6922EF0089C9C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAF95E6A1B6922EF0089C9C9 /* GameViewController.m in Sources */,
+				AAF95E621B6922EF0089C9C9 /* AppDelegate.m in Sources */,
+				AAF95E651B6922EF0089C9C9 /* GameScene.m in Sources */,
+				AAF95E5F1B6922EF0089C9C9 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAF95E731B6922EF0089C9C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAF95E7E1B6922EF0089C9C9 /* Space_CannonTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AAF95E791B6922EF0089C9C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AAF95E581B6922EF0089C9C9 /* Space Cannon */;
+			targetProxy = AAF95E781B6922EF0089C9C9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AAF95E6B1B6922EF0089C9C9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AAF95E6C1B6922EF0089C9C9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AAF95E701B6922EF0089C9C9 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AAF95E711B6922EF0089C9C9 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AAF95E7F1B6922EF0089C9C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Space Cannon/Entitlements.plist";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AAF95E801B6922EF0089C9C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Space Cannon/Entitlements.plist";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AAF95E821B6922EF0089C9C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Space Cannon/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AAF95E831B6922EF0089C9C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Space Cannon/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AAF95E851B6922EF0089C9C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Space CannonTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Space Cannon.app/Space Cannon";
+			};
+			name = Debug;
+		};
+		AAF95E861B6922EF0089C9C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Space CannonTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Space Cannon.app/Space Cannon";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AAF95E541B6922EF0089C9C9 /* Build configuration list for PBXProject "Space Cannon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAF95E7F1B6922EF0089C9C9 /* Debug */,
+				AAF95E801B6922EF0089C9C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AAF95E811B6922EF0089C9C9 /* Build configuration list for PBXNativeTarget "Space Cannon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAF95E821B6922EF0089C9C9 /* Debug */,
+				AAF95E831B6922EF0089C9C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AAF95E841B6922EF0089C9C9 /* Build configuration list for PBXNativeTarget "Space CannonTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAF95E851B6922EF0089C9C9 /* Debug */,
+				AAF95E861B6922EF0089C9C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AAF95E511B6922EF0089C9C9 /* Project object */;
+}
