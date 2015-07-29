@@ -8,7 +8,10 @@
 
 #import "GameScene.h"
 
-@implementation GameScene
+@implementation GameScene {
+    SKNode *_mainLayer;
+    SKNode *_cannon;
+}
 
 -(void)didMoveToView:(SKView *)view {
     
@@ -18,6 +21,19 @@
     // Our image dont have an alpha layer so we could do some optimisation (default is SkBlendModeAlpha
     backGround.blendMode = SKBlendModeReplace;
     [self addChild:backGround];
+    // Add main layer
+    _mainLayer = [[SKNode alloc]init];
+    [self addChild:_mainLayer];
+    
+    // Add cannon
+    _cannon = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Cannon"];
+    _cannon.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMinY(self.frame));
+    [_mainLayer addChild:_cannon];
+    
+    // Create rotation actions
+    // This will rotate the cannon for 180 to the left and back
+    SKAction *rotation = [SKAction sequence:@[[SKAction rotateByAngle:M_PI duration:2],[SKAction rotateByAngle:-M_PI duration:2]]];
+    [_cannon runAction:[SKAction repeatActionForever:rotation]];
     
 }
 
