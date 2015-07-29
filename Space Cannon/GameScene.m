@@ -13,6 +13,13 @@
     SKNode *_cannon;
 }
 
+static inline CGVector radiansToVector(CGFloat radians) {
+    CGVector vector;
+    vector.dx = cosf(radians);
+    vector.dy = sinf(radians);
+    return vector;
+}
+
 -(void)didMoveToView:(SKView *)view {
     
     // Lets add some background
@@ -37,12 +44,20 @@
     
 }
 
+-(void)shoot {
+    SKSpriteNode *ball = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Ball"];
+    CGVector rotationVector = radiansToVector(_cannon.zRotation);
+    ball.position = CGPointMake(_cannon.position.x + (_cannon.frame.size.width * 0.5 *rotationVector.dx),
+                                _cannon.position.y + (_cannon.frame.size.height * 0.5 *rotationVector.dy));
+    [_mainLayer addChild:ball];
+}
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
     
-//    for (UITouch *touch in touches) {
-//        
-//    }
+    for (UITouch *touch in touches) {
+        [self shoot];
+    }
 }
 
 -(void)update:(CFTimeInterval)currentTime {
