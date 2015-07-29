@@ -13,6 +13,8 @@
     SKNode *_cannon;
 }
 
+static const CGFloat SHOOT_SPEED = 1000.0f;
+
 static inline CGVector radiansToVector(CGFloat radians) {
     CGVector vector;
     vector.dx = cosf(radians);
@@ -21,6 +23,9 @@ static inline CGVector radiansToVector(CGFloat radians) {
 }
 
 -(void)didMoveToView:(SKView *)view {
+    
+    // Turning off the gravity
+    self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
     
     // Lets add some background
     SKSpriteNode *backGround = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Starfield"];
@@ -46,9 +51,13 @@ static inline CGVector radiansToVector(CGFloat radians) {
 
 -(void)shoot {
     SKSpriteNode *ball = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Ball"];
+    ball.name = @"ball";
     CGVector rotationVector = radiansToVector(_cannon.zRotation);
     ball.position = CGPointMake(_cannon.position.x + (_cannon.frame.size.width * 0.5 *rotationVector.dx),
                                 _cannon.position.y + (_cannon.frame.size.height * 0.5 *rotationVector.dy));
+    
+    ball.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:6.0];
+    ball.physicsBody.velocity = CGVectorMake(rotationVector.dx * SHOOT_SPEED, rotationVector.dy * SHOOT_SPEED);
     [_mainLayer addChild:ball];
 }
 
@@ -58,6 +67,16 @@ static inline CGVector radiansToVector(CGFloat radians) {
     for (UITouch *touch in touches) {
         [self shoot];
     }
+}
+
+// Minor optimisations. This will remove balls from the tree, that are no longer on the self.frame
+-(void)didSimulatePhysics{
+    [_mainLayer enumerateChildNodesWithName:@"ball" usingBlock:^(SKNode *node, BOOL *stop) {
+        // Exclamation mark means inverts the statement (if !yes = if not)
+        if (!CGRectContainsPoint(self.frame, node.position)) {
+            [node removeFromParent];
+        }
+    }];
 }
 
 -(void)update:(CFTimeInterval)currentTime {
