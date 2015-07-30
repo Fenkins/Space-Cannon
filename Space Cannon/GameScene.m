@@ -11,6 +11,7 @@
 @implementation GameScene {
     SKNode *_mainLayer;
     SKNode *_cannon;
+    BOOL _didShoot;
 }
 
 static const CGFloat SHOOT_SPEED = 1000.0f;
@@ -65,12 +66,17 @@ static inline CGVector radiansToVector(CGFloat radians) {
     /* Called when a touch begins */
     
     for (UITouch *touch in touches) {
-        [self shoot];
+        _didShoot = YES;
     }
 }
 
 // Minor optimisations. This will remove balls from the tree, that are no longer on the self.frame
 -(void)didSimulatePhysics{
+    if (_didShoot) {
+        // Moving shooting here in order to catch up with rendering loop
+        [self shoot];
+        _didShoot = NO;
+    }
     [_mainLayer enumerateChildNodesWithName:@"ball" usingBlock:^(SKNode *node, BOOL *stop) {
         // Exclamation mark means inverts the statement (if !yes = if not)
         if (!CGRectContainsPoint(self.frame, node.position)) {
