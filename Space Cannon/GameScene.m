@@ -28,6 +28,17 @@ static inline CGVector radiansToVector(CGFloat radians) {
     // Turning off the gravity
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
     
+    // Adding edges
+    SKNode *leftEdge = [[SKNode alloc] init];
+    leftEdge.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointZero toPoint:CGPointMake(0.0, self.size.height)];
+    leftEdge.position = CGPointZero;
+    [self addChild:leftEdge];
+    
+    SKNode *rightEdge = [[SKNode alloc]init];
+    rightEdge.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointZero toPoint:CGPointMake(0.0, self.size.height)];
+    rightEdge.position = CGPointMake(self.size.width, 0.0);
+    [self addChild:rightEdge];
+    
     // Lets add some background
     SKSpriteNode *backGround = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Starfield"];
     backGround.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
@@ -59,6 +70,9 @@ static inline CGVector radiansToVector(CGFloat radians) {
     
     ball.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:6.0];
     ball.physicsBody.velocity = CGVectorMake(rotationVector.dx * SHOOT_SPEED, rotationVector.dy * SHOOT_SPEED);
+    ball.physicsBody.restitution = 1.0;
+    ball.physicsBody.linearDamping = 0.0;
+    ball.physicsBody.friction = 0.0;
     [_mainLayer addChild:ball];
 }
 
@@ -76,7 +90,7 @@ static inline CGVector radiansToVector(CGFloat radians) {
         // Moving shooting here in order to catch up with rendering loop
         [self shoot];
         _didShoot = NO;
-    }
+    } 
     [_mainLayer enumerateChildNodesWithName:@"ball" usingBlock:^(SKNode *node, BOOL *stop) {
         // Exclamation mark means inverts the statement (if !yes = if not)
         if (!CGRectContainsPoint(self.frame, node.position)) {
