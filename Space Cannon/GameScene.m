@@ -23,6 +23,14 @@ static inline CGVector radiansToVector(CGFloat radians) {
     return vector;
 }
 
+// This is called static inline method
+static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
+    // Random number betweet 0 and 1
+    CGFloat value = arc4random_uniform(UINT32_MAX) / (CGFloat)UINT32_MAX;
+    // This will convert our random number to the number from the given range
+    return value * (high - low) + low;
+}
+
 -(void)didMoveToView:(SKView *)view {
     
     // Turning off the gravity
