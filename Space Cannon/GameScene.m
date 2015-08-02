@@ -20,6 +20,10 @@ static const CGFloat kCCHaloLowAngle = 200.0 * M_PI / 180;
 static const CGFloat kCCHaloHighAngle = 340.0 * M_PI /180;
 static const CGFloat kCCHaloSpeed = 100.0;
 
+static const uint32_t kCCHaloCategory = 0x1 << 0;
+static const uint32_t kCCBallCategory = 0x1 << 1;
+static const uint32_t kCCEdgeCategory = 0x1 << 2;
+
 static inline CGVector radiansToVector(CGFloat radians) {
     CGVector vector;
     vector.dx = cosf(radians);
@@ -39,16 +43,20 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     
     // Turning off the gravity
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
+    // Setting the contacts listener to self
+    self.physicsWorld.contactDelegate = self;
     
     // Adding edges
     SKNode *leftEdge = [[SKNode alloc] init];
     leftEdge.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointZero toPoint:CGPointMake(0.0, self.size.height)];
     leftEdge.position = CGPointZero;
+    leftEdge.physicsBody.categoryBitMask = kCCEdgeCategory;
     [self addChild:leftEdge];
     
     SKNode *rightEdge = [[SKNode alloc]init];
     rightEdge.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointZero toPoint:CGPointMake(0.0, self.size.height)];
     rightEdge.position = CGPointMake(self.size.width, 0.0);
+    leftEdge.physicsBody.categoryBitMask = kCCEdgeCategory;
     [self addChild:rightEdge];
     
     // Lets add some background
@@ -87,6 +95,11 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     halo.physicsBody.restitution = 1.0;
     halo.physicsBody.linearDamping = 0.0;
     halo.physicsBody.friction = 0.0;
+    
+    halo.physicsBody.categoryBitMask = kCCHaloCategory;
+    halo.physicsBody.collisionBitMask = kCCEdgeCategory | kCCHaloCategory;
+    // We want to be notified about collission with cannon ball
+    halo.physicsBody.contactTestBitMask = kCCBallCategory;
     [_mainLayer addChild:halo];
 }
 
@@ -102,7 +115,26 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     ball.physicsBody.restitution = 1.0;
     ball.physicsBody.linearDamping = 0.0;
     ball.physicsBody.friction = 0.0;
+
+    ball.physicsBody.categoryBitMask = kCCBallCategory;
     [_mainLayer addChild:ball];
+}
+
+-(void)didBeginContact:(SKPhysicsContact *)contact {
+    SKPhysicsBody *firstBody;
+    SKPhysicsBody *secondBody;
+    
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    } else {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
+    if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCBallCategory) {
+        [firstBody.node removeFromParent];
+        [secondBody.node removeFromParent];
+    }
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
