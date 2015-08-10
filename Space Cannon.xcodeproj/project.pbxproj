@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA91BE721B78D0AA009D9DCF /* HaloExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = AA91BE701B78D0AA009D9DCF /* HaloExplosion.sks */; };
+		AA91BE731B78D0AA009D9DCF /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = AA91BE711B78D0AA009D9DCF /* spark.png */; };
 		AAF95E5F1B6922EF0089C9C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF95E5E1B6922EF0089C9C9 /* main.m */; };
 		AAF95E621B6922EF0089C9C9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF95E611B6922EF0089C9C9 /* AppDelegate.m */; };
 		AAF95E651B6922EF0089C9C9 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF95E641B6922EF0089C9C9 /* GameScene.m */; };
@@ -31,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA91BE701B78D0AA009D9DCF /* HaloExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HaloExplosion.sks; sourceTree = "<group>"; };
+		AA91BE711B78D0AA009D9DCF /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		AAF95E591B6922EF0089C9C9 /* Space Cannon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Space Cannon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF95E5D1B6922EF0089C9C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAF95E5E1B6922EF0089C9C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -109,6 +113,8 @@
 		AAF95E5C1B6922EF0089C9C9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AA91BE701B78D0AA009D9DCF /* HaloExplosion.sks */,
+				AA91BE711B78D0AA009D9DCF /* spark.png */,
 				AAF95E5D1B6922EF0089C9C9 /* Info.plist */,
 				AAF95E871B69232C0089C9C9 /* Entitlements.plist */,
 				AAF95E5E1B6922EF0089C9C9 /* main.m */,
@@ -213,10 +219,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA91BE721B78D0AA009D9DCF /* HaloExplosion.sks in Resources */,
 				AAF95E721B6922EF0089C9C9 /* LaunchScreen.xib in Resources */,
 				AAF95E6F1B6922EF0089C9C9 /* Images.xcassets in Resources */,
 				AAF95E671B6922EF0089C9C9 /* GameScene.sks in Resources */,
 				AAF95E881B69232C0089C9C9 /* Entitlements.plist in Resources */,
+				AA91BE731B78D0AA009D9DCF /* spark.png in Resources */,
 				AAF95E8A1B6926F30089C9C9 /* Images in Resources */,
 				AAF95E6D1B6922EF0089C9C9 /* Main.storyboard in Resources */,
 			);
@@ -438,6 +446,7 @@
 				AAF95E831B6922EF0089C9C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AAF95E841B6922EF0089C9C9 /* Build configuration list for PBXNativeTarget "Space CannonTests" */ = {
 			isa = XCConfigurationList;
@@ -446,6 +455,7 @@
 				AAF95E861B6922EF0089C9C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

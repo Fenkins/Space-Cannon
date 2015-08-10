@@ -140,9 +140,9 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
     
-    for (UITouch *touch in touches) {
-        _didShoot = YES;
-    }
+//    for (UITouch *touch in touches) {
+//        _didShoot = YES;
+//    }
 }
 
 // Minor optimisations. This will remove balls from the tree, that are no longer on the self.frame
