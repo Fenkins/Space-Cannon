@@ -132,17 +132,30 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         secondBody = contact.bodyA;
     }
     if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCBallCategory) {
+        [self addExplosion:firstBody.node.position];
+        
         [firstBody.node removeFromParent];
         [secondBody.node removeFromParent];
     }
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
+-(void)addExplosion:(CGPoint)position {
+    NSString *explosionPath = [[NSBundle mainBundle] pathForResource:@"HaloExplosion" ofType:@"sks"];
+    SKEmitterNode *explosion = [NSKeyedUnarchiver unarchiveObjectWithFile:explosionPath];
+    explosion.position = position;
+    [_mainLayer addChild:explosion];
     
-//    for (UITouch *touch in touches) {
-//        _didShoot = YES;
-//    }
+    SKAction *removeAction = [SKAction sequence:@[[SKAction waitForDuration:1.5],
+                                                 [SKAction removeFromParent]]];
+    [explosion runAction:removeAction];
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+//     Called when a touch begins 
+    
+    for (UITouch *touch in touches) {
+        _didShoot = YES;
+    }
 }
 
 // Minor optimisations. This will remove balls from the tree, that are no longer on the self.frame
