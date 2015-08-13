@@ -21,9 +21,10 @@ static const CGFloat kCCHaloLowAngle = 200.0 * M_PI / 180;
 static const CGFloat kCCHaloHighAngle = 340.0 * M_PI /180;
 static const CGFloat kCCHaloSpeed = 100.0;
 
-static const uint32_t kCCHaloCategory = 0x1 << 0;
-static const uint32_t kCCBallCategory = 0x1 << 1;
-static const uint32_t kCCEdgeCategory = 0x1 << 2;
+static const uint32_t kCCHaloCategory   = 0x1 << 0;
+static const uint32_t kCCBallCategory   = 0x1 << 1;
+static const uint32_t kCCEdgeCategory   = 0x1 << 2;
+static const uint32_t kCCShieldCategory = 0x1 << 3;
 
 static inline CGVector radiansToVector(CGFloat radians) {
     CGVector vector;
@@ -97,6 +98,17 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         self.ammo++;
     }]]];
     [self runAction:[SKAction repeatActionForever:incrementAmmo]];
+    
+    // Setup shields
+    for (int i=0; i<6; i++) {
+        SKSpriteNode *shield = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Block"];
+        shield.position = CGPointMake(35+(50*i), 90);
+        [_mainLayer addChild:shield];
+        shield.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(shield.size.width, shield.size.height)];
+        shield.physicsBody.categoryBitMask = kCCShieldCategory;
+        // We dont want our shield to move
+        shield.physicsBody.collisionBitMask = 0;
+    }
 }
 
 -(void)setAmmo:(int)ammo {
@@ -118,9 +130,9 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     halo.physicsBody.friction = 0.0;
     
     halo.physicsBody.categoryBitMask = kCCHaloCategory;
-    halo.physicsBody.collisionBitMask = kCCEdgeCategory | kCCHaloCategory;
-    // We want to be notified about collission with cannon ball
-    halo.physicsBody.contactTestBitMask = kCCBallCategory;
+    halo.physicsBody.collisionBitMask = kCCEdgeCategory;
+    // We want to be notified about collissions from: (halo and ball) and (halo and shield)
+    halo.physicsBody.contactTestBitMask = kCCBallCategory | kCCShieldCategory;
     [_mainLayer addChild:halo];
 }
 
@@ -141,6 +153,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         ball.physicsBody.friction = 0.0;
         
         ball.physicsBody.categoryBitMask = kCCBallCategory;
+        ball.physicsBody.collisionBitMask = kCCHaloCategory | kCCEdgeCategory;
         [_mainLayer addChild:ball];
     }
     
@@ -158,6 +171,14 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         secondBody = contact.bodyA;
     }
     if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCBallCategory) {
+        // Collision between halo and the ball
+        [self addExplosion:firstBody.node.position];
+        
+        [firstBody.node removeFromParent];
+        [secondBody.node removeFromParent];
+    }
+    if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCShieldCategory) {
+        // Collision between halo and the shield
         [self addExplosion:firstBody.node.position];
         
         [firstBody.node removeFromParent];
