@@ -21,10 +21,11 @@ static const CGFloat kCCHaloLowAngle = 200.0 * M_PI / 180;
 static const CGFloat kCCHaloHighAngle = 340.0 * M_PI /180;
 static const CGFloat kCCHaloSpeed = 100.0;
 
-static const uint32_t kCCHaloCategory   = 0x1 << 0;
-static const uint32_t kCCBallCategory   = 0x1 << 1;
-static const uint32_t kCCEdgeCategory   = 0x1 << 2;
-static const uint32_t kCCShieldCategory = 0x1 << 3;
+static const uint32_t kCCHaloCategory       = 0x1 << 0;
+static const uint32_t kCCBallCategory       = 0x1 << 1;
+static const uint32_t kCCEdgeCategory       = 0x1 << 2;
+static const uint32_t kCCShieldCategory     = 0x1 << 3;
+static const uint32_t kCCLifeBarCategory    = 0x1 << 4;
 
 static inline CGVector radiansToVector(CGFloat radians) {
     CGVector vector;
@@ -81,7 +82,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     SKAction *rotation = [SKAction sequence:@[[SKAction rotateByAngle:M_PI duration:2],[SKAction rotateByAngle:-M_PI duration:2]]];
     [_cannon runAction:[SKAction repeatActionForever:rotation]];
     
-    // Create spown halo actions
+    // Create spawn halo actions
     SKAction *spawnHalo = [SKAction sequence:@[[SKAction waitForDuration:2 withRange:1],
                                                [SKAction performSelector:@selector(spawnHalo) onTarget:self]]];
     [self runAction:[SKAction repeatActionForever:spawnHalo]];
@@ -109,6 +110,13 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         // We dont want our shield to move
         shield.physicsBody.collisionBitMask = 0;
     }
+    
+    // Setup life bar
+    SKSpriteNode *lifeBar = [SKSpriteNode spriteNodeWithImageNamed:@"Images/BlueBar"];
+    lifeBar.position = CGPointMake(self.size.width * 0.5, 70);
+    lifeBar.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointMake(-lifeBar.size.width * 0.5, 0) toPoint:CGPointMake(lifeBar.size.width * 0.5, 0)];
+    lifeBar.physicsBody.categoryBitMask = kCCLifeBarCategory;
+    [_mainLayer addChild:lifeBar];
 }
 
 -(void)setAmmo:(int)ammo {
@@ -132,7 +140,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     halo.physicsBody.categoryBitMask = kCCHaloCategory;
     halo.physicsBody.collisionBitMask = kCCEdgeCategory;
     // We want to be notified about collissions from: (halo and ball) and (halo and shield)
-    halo.physicsBody.contactTestBitMask = kCCBallCategory | kCCShieldCategory;
+    halo.physicsBody.contactTestBitMask = kCCBallCategory | kCCShieldCategory | kCCLifeBarCategory;
     [_mainLayer addChild:halo];
 }
 
@@ -154,6 +162,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         
         ball.physicsBody.categoryBitMask = kCCBallCategory;
         ball.physicsBody.collisionBitMask = kCCHaloCategory | kCCEdgeCategory;
+        ball.physicsBody.contactTestBitMask = kCCEdgeCategory;
         [_mainLayer addChild:ball];
     }
     
@@ -172,22 +181,34 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     }
     if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCBallCategory) {
         // Collision between halo and the ball
-        [self addExplosion:firstBody.node.position];
+        [self addExplosion:firstBody.node.position withName:@"HaloExplosion"];
         
         [firstBody.node removeFromParent];
         [secondBody.node removeFromParent];
     }
     if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCShieldCategory) {
         // Collision between halo and the shield
-        [self addExplosion:firstBody.node.position];
+        [self addExplosion:firstBody.node.position withName:@"HaloExplosion"];
         
         [firstBody.node removeFromParent];
         [secondBody.node removeFromParent];
     }
+    if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCLifeBarCategory) {
+        // Collision between halo and the lifeBar
+        [self addExplosion:firstBody.node.position withName:@"HaloExplosion"];
+        [self addExplosion:secondBody.node.position withName:@"LifeBarExplosion"];
+        
+        [firstBody.node removeFromParent];
+        [secondBody.node removeFromParent];
+    }
+    if (firstBody.categoryBitMask == kCCBallCategory && secondBody.categoryBitMask == kCCEdgeCategory) {
+        // Collision between ball and the edge
+        [self addExplosion:contact.contactPoint withName:@"BallEdgeBounce"];
+    }
 }
 
--(void)addExplosion:(CGPoint)position {
-    NSString *explosionPath = [[NSBundle mainBundle] pathForResource:@"HaloExplosion" ofType:@"sks"];
+-(void)addExplosion:(CGPoint)position withName:(NSString *)name {
+    NSString *explosionPath = [[NSBundle mainBundle] pathForResource:name ofType:@"sks"];
     SKEmitterNode *explosion = [NSKeyedUnarchiver unarchiveObjectWithFile:explosionPath];
     explosion.position = position;
     [_mainLayer addChild:explosion];
