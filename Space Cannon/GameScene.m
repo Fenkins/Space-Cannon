@@ -11,6 +11,7 @@
 @implementation GameScene {
     SKNode *_mainLayer;
     SKNode *_cannon;
+    SKSpriteNode *_ammoDisplay;
     BOOL _didShoot;
 }
 
@@ -83,6 +84,26 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     SKAction *spawnHalo = [SKAction sequence:@[[SKAction waitForDuration:2 withRange:1],
                                                [SKAction performSelector:@selector(spawnHalo) onTarget:self]]];
     [self runAction:[SKAction repeatActionForever:spawnHalo]];
+    
+    // Setup ammo
+    _ammoDisplay = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Ammo5"];
+    _ammoDisplay.anchorPoint = CGPointMake(0.5, 0.0);
+    _ammoDisplay.position = _cannon.position;
+    [_mainLayer addChild:_ammoDisplay];
+    self.ammo = 5;
+    
+    SKAction *incrementAmmo = [SKAction sequence:@[[SKAction waitForDuration:1],
+                                                   [SKAction runBlock:^{
+        self.ammo++;
+    }]]];
+    [self runAction:[SKAction repeatActionForever:incrementAmmo]];
+}
+
+-(void)setAmmo:(int)ammo {
+    if (ammo >= 0 && ammo <= 5) {
+        _ammo = ammo;
+        _ammoDisplay.texture = [SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Images/Ammo%d",ammo]];
+    }
 }
 
 -(void)spawnHalo{
@@ -104,20 +125,25 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
 }
 
 -(void)shoot {
-    SKSpriteNode *ball = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Ball"];
-    ball.name = @"ball";
-    CGVector rotationVector = radiansToVector(_cannon.zRotation);
-    ball.position = CGPointMake(_cannon.position.x + (_cannon.frame.size.width * 0.5 *rotationVector.dx),
-                                _cannon.position.y + (_cannon.frame.size.height * 0.5 *rotationVector.dy));
+    if (self.ammo > 0) {
+        self.ammo--;
+        
+        SKSpriteNode *ball = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Ball"];
+        ball.name = @"ball";
+        CGVector rotationVector = radiansToVector(_cannon.zRotation);
+        ball.position = CGPointMake(_cannon.position.x + (_cannon.frame.size.width * 0.5 *rotationVector.dx),
+                                    _cannon.position.y + (_cannon.frame.size.height * 0.5 *rotationVector.dy));
+        
+        ball.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:6.0];
+        ball.physicsBody.velocity = CGVectorMake(rotationVector.dx * SHOOT_SPEED, rotationVector.dy * SHOOT_SPEED);
+        ball.physicsBody.restitution = 1.0;
+        ball.physicsBody.linearDamping = 0.0;
+        ball.physicsBody.friction = 0.0;
+        
+        ball.physicsBody.categoryBitMask = kCCBallCategory;
+        [_mainLayer addChild:ball];
+    }
     
-    ball.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:6.0];
-    ball.physicsBody.velocity = CGVectorMake(rotationVector.dx * SHOOT_SPEED, rotationVector.dy * SHOOT_SPEED);
-    ball.physicsBody.restitution = 1.0;
-    ball.physicsBody.linearDamping = 0.0;
-    ball.physicsBody.friction = 0.0;
-
-    ball.physicsBody.categoryBitMask = kCCBallCategory;
-    [_mainLayer addChild:ball];
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
