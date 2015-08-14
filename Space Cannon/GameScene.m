@@ -75,7 +75,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     // Add cannon
     _cannon = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Cannon"];
     _cannon.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMinY(self.frame));
-    [_mainLayer addChild:_cannon];
+    [self addChild:_cannon];
     
     // Create rotation actions
     // This will rotate the cannon for 180 to the left and back
@@ -91,8 +91,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _ammoDisplay = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Ammo5"];
     _ammoDisplay.anchorPoint = CGPointMake(0.5, 0.0);
     _ammoDisplay.position = _cannon.position;
-    [_mainLayer addChild:_ammoDisplay];
-    self.ammo = 5;
+    [self addChild:_ammoDisplay];
     
     SKAction *incrementAmmo = [SKAction sequence:@[[SKAction waitForDuration:1],
                                                    [SKAction runBlock:^{
@@ -100,23 +99,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     }]]];
     [self runAction:[SKAction repeatActionForever:incrementAmmo]];
     
-    // Setup shields
-    for (int i=0; i<6; i++) {
-        SKSpriteNode *shield = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Block"];
-        shield.position = CGPointMake(35+(50*i), 90);
-        [_mainLayer addChild:shield];
-        shield.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(shield.size.width, shield.size.height)];
-        shield.physicsBody.categoryBitMask = kCCShieldCategory;
-        // We dont want our shield to move
-        shield.physicsBody.collisionBitMask = 0;
-    }
-    
-    // Setup life bar
-    SKSpriteNode *lifeBar = [SKSpriteNode spriteNodeWithImageNamed:@"Images/BlueBar"];
-    lifeBar.position = CGPointMake(self.size.width * 0.5, 70);
-    lifeBar.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointMake(-lifeBar.size.width * 0.5, 0) toPoint:CGPointMake(lifeBar.size.width * 0.5, 0)];
-    lifeBar.physicsBody.categoryBitMask = kCCLifeBarCategory;
-    [_mainLayer addChild:lifeBar];
+    [self newGame];
 }
 
 -(void)setAmmo:(int)ammo {
@@ -129,6 +112,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
 -(void)spawnHalo{
     // Creating halo node
     SKSpriteNode *halo = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Halo"];
+    halo.name = @"halo";
     halo.position = CGPointMake(randomInRange(halo.size.width * 0.5, self.size.width-halo.size.width * 0.5), self.size.height + halo.size.height * 0.5);
     halo.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:16.0];
     CGVector direction = radiansToVector(randomInRange(kCCHaloLowAngle, kCCHaloHighAngle));
@@ -195,11 +179,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     }
     if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCLifeBarCategory) {
         // Collision between halo and the lifeBar
-        [self addExplosion:firstBody.node.position withName:@"HaloExplosion"];
         [self addExplosion:secondBody.node.position withName:@"LifeBarExplosion"];
         
-        [firstBody.node removeFromParent];
         [secondBody.node removeFromParent];
+        [self gameOver];
     }
     if (firstBody.categoryBitMask == kCCBallCategory && secondBody.categoryBitMask == kCCEdgeCategory) {
         // Collision between ball and the edge
@@ -216,6 +199,45 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     SKAction *removeAction = [SKAction sequence:@[[SKAction waitForDuration:1.5],
                                                  [SKAction removeFromParent]]];
     [explosion runAction:removeAction];
+}
+
+-(void)gameOver {
+    [_mainLayer enumerateChildNodesWithName:@"halo" usingBlock:^(SKNode *node, BOOL *stop) {
+        [self addExplosion:node.position withName:@"HaloExplosion"];
+        [node removeFromParent];
+    }];
+    [_mainLayer enumerateChildNodesWithName:@"ball" usingBlock:^(SKNode *node, BOOL *stop) {
+        [node removeFromParent];
+    }];
+    [_mainLayer enumerateChildNodesWithName:@"shield" usingBlock:^(SKNode *node, BOOL *stop) {
+        [node removeFromParent];
+    }];
+    [self performSelector:@selector(newGame) withObject:nil afterDelay:1.5];
+}
+
+-(void)newGame {
+    self.ammo = 5;
+
+    [_mainLayer removeAllChildren];
+    
+    // Setup shields
+    for (int i=0; i<6; i++) {
+        SKSpriteNode *shield = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Block"];
+        shield.name = @"shield";
+        shield.position = CGPointMake(35+(50*i), 90);
+        [_mainLayer addChild:shield];
+        shield.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(shield.size.width, shield.size.height)];
+        shield.physicsBody.categoryBitMask = kCCShieldCategory;
+        // We dont want our shield to move
+        shield.physicsBody.collisionBitMask = 0;
+    }
+    
+    // Setup life bar
+    SKSpriteNode *lifeBar = [SKSpriteNode spriteNodeWithImageNamed:@"Images/BlueBar"];
+    lifeBar.position = CGPointMake(self.size.width * 0.5, 70);
+    lifeBar.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointMake(-lifeBar.size.width * 0.5, 0) toPoint:CGPointMake(lifeBar.size.width * 0.5, 0)];
+    lifeBar.physicsBody.categoryBitMask = kCCLifeBarCategory;
+    [_mainLayer addChild:lifeBar];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
