@@ -59,7 +59,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     SKNode *rightEdge = [[SKNode alloc]init];
     rightEdge.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointZero toPoint:CGPointMake(0.0, self.size.height)];
     rightEdge.position = CGPointMake(self.size.width, 0.0);
-    leftEdge.physicsBody.categoryBitMask = kCCEdgeCategory;
+    rightEdge.physicsBody.categoryBitMask = kCCEdgeCategory;
     [self addChild:rightEdge];
     
     // Lets add some background
