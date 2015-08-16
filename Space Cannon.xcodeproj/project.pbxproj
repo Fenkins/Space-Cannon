@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AA2D78861B7B1BAA008FBE36 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = AA2D78851B7B1BAA008FBE36 /* spark.png */; };
+		AA4767E71B80733F00C3E5F4 /* CCMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4767E61B80733F00C3E5F4 /* CCMenu.m */; };
 		AA6A08061B7F795C0075C825 /* Bounce.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA6A08001B7F795C0075C825 /* Bounce.caf */; };
 		AA6A08071B7F795C0075C825 /* DeepExplosion.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA6A08011B7F795C0075C825 /* DeepExplosion.caf */; };
 		AA6A08081B7F795C0075C825 /* Explosion.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA6A08021B7F795C0075C825 /* Explosion.caf */; };
@@ -43,6 +44,8 @@
 
 /* Begin PBXFileReference section */
 		AA2D78851B7B1BAA008FBE36 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		AA4767E51B80733F00C3E5F4 /* CCMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenu.h; sourceTree = "<group>"; };
+		AA4767E61B80733F00C3E5F4 /* CCMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMenu.m; sourceTree = "<group>"; };
 		AA6A08001B7F795C0075C825 /* Bounce.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bounce.caf; sourceTree = "<group>"; };
 		AA6A08011B7F795C0075C825 /* DeepExplosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DeepExplosion.caf; sourceTree = "<group>"; };
 		AA6A08021B7F795C0075C825 /* Explosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Explosion.caf; sourceTree = "<group>"; };
@@ -138,6 +141,8 @@
 				AAF95E6E1B6922EF0089C9C9 /* Images.xcassets */,
 				AAF95E701B6922EF0089C9C9 /* LaunchScreen.xib */,
 				AAF95E5C1B6922EF0089C9C9 /* Supporting Files */,
+				AA4767E51B80733F00C3E5F4 /* CCMenu.h */,
+				AA4767E61B80733F00C3E5F4 /* CCMenu.m */,
 			);
 			path = "Space Cannon";
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 			files = (
 				AAF95E6A1B6922EF0089C9C9 /* GameViewController.m in Sources */,
 				AAF95E621B6922EF0089C9C9 /* AppDelegate.m in Sources */,
+				AA4767E71B80733F00C3E5F4 /* CCMenu.m in Sources */,
 				AAF95E651B6922EF0089C9C9 /* GameScene.m in Sources */,
 				AAF95E5F1B6922EF0089C9C9 /* main.m in Sources */,
 			);

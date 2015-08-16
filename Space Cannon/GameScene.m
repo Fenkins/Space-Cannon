@@ -10,6 +10,7 @@
 
 @implementation GameScene {
     SKNode *_mainLayer;
+    CCMenu *_menu;
     SKNode *_cannon;
     SKSpriteNode *_ammoDisplay;
     SKLabelNode *_scoreLabel;
@@ -118,6 +119,11 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _explosionSound = [SKAction playSoundFileNamed:@"Explosion.caf" waitForCompletion:NO];
     _laserSound = [SKAction playSoundFileNamed:@"Laser.caf" waitForCompletion:NO];
     _zapSound = [SKAction playSoundFileNamed:@"Zap.caf" waitForCompletion:NO];
+    
+    // Setup menu
+    _menu = [[CCMenu alloc]init];
+    _menu.position = CGPointMake(self.size.width * 0.5, self.size.height - 220);
+    [self addChild:_menu];
     
     [self newGame];
 }
