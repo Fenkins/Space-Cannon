@@ -20,6 +20,7 @@
     SKAction *_explosionSound;
     SKAction *_laserSound;
     SKAction *_zapSound;
+    BOOL _gameOver;
 }
 
 static const CGFloat SHOOT_SPEED = 1000.0f;
@@ -125,7 +126,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _menu.position = CGPointMake(self.size.width * 0.5, self.size.height - 220);
     [self addChild:_menu];
     
-    [self newGame];
+    _gameOver = YES;
 }
 
 -(void)setAmmo:(int)ammo {
@@ -253,7 +254,9 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     [_mainLayer enumerateChildNodesWithName:@"shield" usingBlock:^(SKNode *node, BOOL *stop) {
         [node removeFromParent];
     }];
-    [self performSelector:@selector(newGame) withObject:nil afterDelay:1.5];
+    
+    _menu.hidden = NO;
+    _gameOver = YES;
 }
 
 -(void)newGame {
@@ -279,13 +282,29 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     lifeBar.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointMake(-lifeBar.size.width * 0.5, 0) toPoint:CGPointMake(lifeBar.size.width * 0.5, 0)];
     lifeBar.physicsBody.categoryBitMask = kCCLifeBarCategory;
     [_mainLayer addChild:lifeBar];
+    
+    _gameOver = NO;
+    _menu.hidden = YES;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 //     Called when a touch begins 
     
     for (UITouch *touch in touches) {
-        _didShoot = YES;
+        if (!_gameOver) {
+            _didShoot = YES;
+        }
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    for (UITouch *touch in touches) {
+        if (_gameOver) {
+            SKNode *n = [_menu nodeAtPoint:[touch locationInNode:_menu]];
+            if ([n.name isEqualToString:@"Play"]) {
+                [self newGame];
+            }
+        }
     }
 }
 
