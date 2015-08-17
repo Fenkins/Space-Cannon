@@ -131,6 +131,8 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     self.ammo = 5;
     self.score = 0;
     _gameOver = YES;
+    
+    _scoreLabel.hidden = YES;
 }
 
 -(void)setAmmo:(int)ammo {
@@ -261,11 +263,13 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     
     _menu.hidden = NO;
     _gameOver = YES;
+    _scoreLabel.hidden = YES;
 }
 
 -(void)newGame {
     self.ammo = 5;
     self.score = 0;
+    _scoreLabel.hidden = NO;
     [_mainLayer removeAllChildren];
     
     // Setup shields
