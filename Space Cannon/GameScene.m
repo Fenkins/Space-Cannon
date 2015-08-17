@@ -261,6 +261,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [node removeFromParent];
     }];
     
+    _menu.score = self.score;
+    if (self.score > _menu.topScore) {
+        _menu.topScore = self.score;
+    }
     _menu.hidden = NO;
     _gameOver = YES;
     _scoreLabel.hidden = YES;
