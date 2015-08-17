@@ -126,6 +126,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _menu.position = CGPointMake(self.size.width * 0.5, self.size.height - 220);
     [self addChild:_menu];
     
+    // Set initial values
+    // If we will not set it here, initialization of the scores in newGame method will come with a HUUUUGE delay
+    self.ammo = 5;
+    self.score = 0;
     _gameOver = YES;
 }
 
