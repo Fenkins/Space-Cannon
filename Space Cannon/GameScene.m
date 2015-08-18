@@ -62,13 +62,13 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     
     // Adding edges
     SKNode *leftEdge = [[SKNode alloc] init];
-    leftEdge.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointZero toPoint:CGPointMake(0.0, self.size.height)];
+    leftEdge.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointZero toPoint:CGPointMake(0.0, self.size.height + 100)];
     leftEdge.position = CGPointZero;
     leftEdge.physicsBody.categoryBitMask = kCCEdgeCategory;
     [self addChild:leftEdge];
     
     SKNode *rightEdge = [[SKNode alloc]init];
-    rightEdge.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointZero toPoint:CGPointMake(0.0, self.size.height)];
+    rightEdge.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointZero toPoint:CGPointMake(0.0, self.size.height + 100)];
     rightEdge.position = CGPointMake(self.size.width, 0.0);
     rightEdge.physicsBody.categoryBitMask = kCCEdgeCategory;
     [self addChild:rightEdge];
@@ -190,7 +190,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         ball.physicsBody.friction = 0.0;
         
         ball.physicsBody.categoryBitMask = kCCBallCategory;
-        ball.physicsBody.collisionBitMask = kCCHaloCategory | kCCEdgeCategory;
+        ball.physicsBody.collisionBitMask = kCCEdgeCategory;
         ball.physicsBody.contactTestBitMask = kCCEdgeCategory;
         [self runAction:_laserSound];
         [_mainLayer addChild:ball];
@@ -223,6 +223,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [self addExplosion:firstBody.node.position withName:@"HaloExplosion"];
         [self runAction:_explosionSound];
 
+        // This line will drop halo collision detection after it hits the shield, so it wont hit another one before its being removed.
+        // So to summerize - this line makes halo remove only one shield at a time
+        firstBody.categoryBitMask = 0;
+        
         [firstBody.node removeFromParent];
         [secondBody.node removeFromParent];
     }
