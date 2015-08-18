@@ -7,11 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "CCMenu.h"
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate>
-
-@property (nonatomic) int ammo;
-@property (nonatomic) int score;
 
 @end
