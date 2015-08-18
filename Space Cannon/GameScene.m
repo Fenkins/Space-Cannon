@@ -346,6 +346,11 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
             [node removeFromParent];
         }
     }];
+    [_mainLayer enumerateChildNodesWithName:@"halo" usingBlock:^(SKNode *node, BOOL *stop) {
+        if (node.position.x + node.frame.size.height < 0) {
+            [node removeFromParent];
+        }
+    }];
 }
 
 -(void)update:(CFTimeInterval)currentTime {
