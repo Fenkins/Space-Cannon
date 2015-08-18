@@ -21,6 +21,7 @@
     SKAction *_laserSound;
     SKAction *_zapSound;
     BOOL _gameOver;
+    NSUserDefaults *_userDefaults;
 }
 
 static const CGFloat SHOOT_SPEED = 1000.0f;
@@ -34,6 +35,8 @@ static const uint32_t kCCBallCategory       = 0x1 << 1;
 static const uint32_t kCCEdgeCategory       = 0x1 << 2;
 static const uint32_t kCCShieldCategory     = 0x1 << 3;
 static const uint32_t kCCLifeBarCategory    = 0x1 << 4;
+
+static NSString *const kCCKeyTopScore = @"TopScore";
 
 static inline CGVector radiansToVector(CGFloat radians) {
     CGVector vector;
@@ -133,6 +136,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _gameOver = YES;
     
     _scoreLabel.hidden = YES;
+    
+    // Load top score
+    _userDefaults = [NSUserDefaults standardUserDefaults];
+    _menu.topScore = [_userDefaults integerForKey:kCCKeyTopScore];
 }
 
 -(void)setAmmo:(int)ammo {
@@ -264,6 +271,8 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _menu.score = self.score;
     if (self.score > _menu.topScore) {
         _menu.topScore = self.score;
+        [_userDefaults setInteger:self.score forKey:kCCKeyTopScore];
+        [_userDefaults synchronize];
     }
     _menu.hidden = NO;
     _gameOver = YES;
