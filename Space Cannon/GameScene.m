@@ -96,7 +96,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     // Create spawn halo actions
     SKAction *spawnHalo = [SKAction sequence:@[[SKAction waitForDuration:2 withRange:1],
                                                [SKAction performSelector:@selector(spawnHalo) onTarget:self]]];
-    [self runAction:[SKAction repeatActionForever:spawnHalo]];
+    [self runAction:[SKAction repeatActionForever:spawnHalo]withKey:@"SpawnHalo"];
     
     // Setup ammo
     _ammoDisplay = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Ammo5"];
@@ -155,6 +155,13 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
 }
 
 -(void)spawnHalo{
+    // Increase spawn speed
+    // This will give us action for key defined earlier
+    SKAction *spawnHaloAction = [self actionForKey:@"SpawnHalo"];
+    if (spawnHaloAction.speed < 1.5) {
+        spawnHaloAction.speed += 0.01;
+    }
+    NSLog(@"%f",spawnHaloAction.speed);
     // Creating halo node
     SKSpriteNode *halo = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Halo"];
     halo.name = @"halo";
@@ -284,9 +291,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
 }
 
 -(void)newGame {
-    self.ammo = 5;
-    self.score = 0;
-    _scoreLabel.hidden = NO;
+    
     [_mainLayer removeAllChildren];
     
     // Setup shields
@@ -301,13 +306,18 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         shield.physicsBody.collisionBitMask = 0;
     }
     
-    // Setup life bar
+    // Setting up the life bar
     SKSpriteNode *lifeBar = [SKSpriteNode spriteNodeWithImageNamed:@"Images/BlueBar"];
     lifeBar.position = CGPointMake(self.size.width * 0.5, 70);
     lifeBar.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointMake(-lifeBar.size.width * 0.5, 0) toPoint:CGPointMake(lifeBar.size.width * 0.5, 0)];
     lifeBar.physicsBody.categoryBitMask = kCCLifeBarCategory;
     [_mainLayer addChild:lifeBar];
     
+    // Set initial values
+    [self actionForKey:@"SpawnHalo"].speed = 1.0;
+    self.ammo = 5;
+    self.score = 0;
+    _scoreLabel.hidden = NO;
     _gameOver = NO;
     _menu.hidden = YES;
 }
