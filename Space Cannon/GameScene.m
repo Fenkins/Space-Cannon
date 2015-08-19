@@ -200,6 +200,13 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         ball.physicsBody.collisionBitMask = kCCEdgeCategory;
         ball.physicsBody.contactTestBitMask = kCCEdgeCategory;
         [self runAction:_laserSound];
+        
+        // Creating trail
+        NSString *trailPath = [[NSBundle mainBundle]pathForResource:@"BallTrail" ofType:@"sks"];
+        SKEmitterNode *ballTrail = [NSKeyedUnarchiver unarchiveObjectWithFile:trailPath];
+        // Throwing our particles to the mainLayer, not the ball itself
+        ballTrail.targetNode = _mainLayer;
+        [ball addChild:ballTrail];
         [_mainLayer addChild:ball];
     }
     
@@ -248,7 +255,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     if (firstBody.categoryBitMask == kCCBallCategory && secondBody.categoryBitMask == kCCEdgeCategory) {
         // Collision between ball and the edge
         [self addExplosion:contact.contactPoint withName:@"BallEdgeBounce"];
-        [self runAction:_zapSound];
+        [self runAction:_laserSound];
     }
     if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCEdgeCategory) {
         // Halo is bouncing off the edge
