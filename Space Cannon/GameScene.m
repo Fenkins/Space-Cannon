@@ -256,6 +256,15 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     }
     if (firstBody.categoryBitMask == kCCBallCategory && secondBody.categoryBitMask == kCCEdgeCategory) {
         // Collision between ball and the edge
+        
+        if ([firstBody.node isKindOfClass:[CCBall class]]) {
+            // This is downcasting. Yea, ObjC has that thing too
+            ((CCBall*)firstBody.node).bounces++;
+            if (((CCBall*)firstBody.node).bounces > 3) {
+                [firstBody.node removeFromParent];
+            }
+        }
+        
         [self addExplosion:contact.contactPoint withName:@"BallEdgeBounce"];
         [self runAction:_laserSound];
     }

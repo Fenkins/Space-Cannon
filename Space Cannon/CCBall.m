@@ -15,7 +15,7 @@
         self.trail.position = self.position;
     }
 }
-
+// This method will ensure that SKEmitterNode(trail) will be removed only after all of the particles is gone
 -(void)removeFromParent {
     if (self.trail) {
         self.trail.particleBirthRate = 0.0;
