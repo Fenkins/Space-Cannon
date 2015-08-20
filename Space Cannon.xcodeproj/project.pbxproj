@@ -19,6 +19,7 @@
 		AAAF2ECD1B7C8A7700C943CF /* particle.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAF2ECC1B7C8A7700C943CF /* particle.png */; };
 		AAAF2ECF1B7C9A4100C943CF /* BallEdgeBounce.sks in Resources */ = {isa = PBXBuildFile; fileRef = AAAF2ECE1B7C9A4100C943CF /* BallEdgeBounce.sks */; };
 		AADB08451B84D29E00F67084 /* BallTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = AADB08441B84D29E00F67084 /* BallTrail.sks */; };
+		AADB08481B86159200F67084 /* CCBall.m in Sources */ = {isa = PBXBuildFile; fileRef = AADB08471B86159200F67084 /* CCBall.m */; };
 		AAF23CB51B7C896E00126873 /* LifeBarExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = AAF23CB41B7C896E00126873 /* LifeBarExplosion.sks */; };
 		AAF95E5F1B6922EF0089C9C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF95E5E1B6922EF0089C9C9 /* main.m */; };
 		AAF95E621B6922EF0089C9C9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF95E611B6922EF0089C9C9 /* AppDelegate.m */; };
@@ -57,6 +58,8 @@
 		AAAF2ECC1B7C8A7700C943CF /* particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle.png; sourceTree = "<group>"; };
 		AAAF2ECE1B7C9A4100C943CF /* BallEdgeBounce.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BallEdgeBounce.sks; sourceTree = "<group>"; };
 		AADB08441B84D29E00F67084 /* BallTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BallTrail.sks; sourceTree = "<group>"; };
+		AADB08461B86159200F67084 /* CCBall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBall.h; sourceTree = "<group>"; };
+		AADB08471B86159200F67084 /* CCBall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBall.m; sourceTree = "<group>"; };
 		AAF23CB41B7C896E00126873 /* LifeBarExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LifeBarExplosion.sks; sourceTree = "<group>"; };
 		AAF95E591B6922EF0089C9C9 /* Space Cannon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Space Cannon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF95E5D1B6922EF0089C9C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -145,6 +148,8 @@
 				AAF95E5C1B6922EF0089C9C9 /* Supporting Files */,
 				AA4767E51B80733F00C3E5F4 /* CCMenu.h */,
 				AA4767E61B80733F00C3E5F4 /* CCMenu.m */,
+				AADB08461B86159200F67084 /* CCBall.h */,
+				AADB08471B86159200F67084 /* CCBall.m */,
 			);
 			path = "Space Cannon";
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 			files = (
 				AAF95E6A1B6922EF0089C9C9 /* GameViewController.m in Sources */,
 				AAF95E621B6922EF0089C9C9 /* AppDelegate.m in Sources */,
+				AADB08481B86159200F67084 /* CCBall.m in Sources */,
 				AA4767E71B80733F00C3E5F4 /* CCMenu.m in Sources */,
 				AAF95E651B6922EF0089C9C9 /* GameScene.m in Sources */,
 				AAF95E5F1B6922EF0089C9C9 /* main.m in Sources */,

@@ -161,7 +161,6 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     if (spawnHaloAction.speed < 1.5) {
         spawnHaloAction.speed += 0.01;
     }
-    NSLog(@"%f",spawnHaloAction.speed);
     // Creating halo node
     SKSpriteNode *halo = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Halo"];
     halo.name = @"halo";
@@ -184,7 +183,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     if (self.ammo > 0) {
         self.ammo--;
         
-        SKSpriteNode *ball = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Ball"];
+        CCBall *ball = [CCBall spriteNodeWithImageNamed:@"Images/Ball"];
         ball.name = @"ball";
         CGVector rotationVector = radiansToVector(_cannon.zRotation);
         ball.position = CGPointMake(_cannon.position.x + (_cannon.frame.size.width * 0.5 *rotationVector.dx),
@@ -206,7 +205,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         SKEmitterNode *ballTrail = [NSKeyedUnarchiver unarchiveObjectWithFile:trailPath];
         // Throwing our particles to the mainLayer, not the ball itself
         ballTrail.targetNode = _mainLayer;
-        [ball addChild:ballTrail];
+        
+        [_mainLayer addChild:ballTrail];
+        ball.trail = ballTrail;
+        
         [_mainLayer addChild:ball];
     }
     
@@ -361,6 +363,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         // Exclamation mark means inverts the statement (if !yes = if not)
         if (!CGRectContainsPoint(self.frame, node.position)) {
             [node removeFromParent];
+        }
+        // We need this block in order to update trail position using CCBall custom class
+        if ([node respondsToSelector:@selector(updateTrail)]) {
+            [node performSelector:@selector(updateTrail) withObject:nil afterDelay:0.0];
         }
     }];
     [_mainLayer enumerateChildNodesWithName:@"halo" usingBlock:^(SKNode *node, BOOL *stop) {
