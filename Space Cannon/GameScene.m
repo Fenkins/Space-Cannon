@@ -176,6 +176,14 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     halo.physicsBody.collisionBitMask = kCCEdgeCategory;
     // We want to be notified about collissions from: (halo and ball) and (halo and shield)
     halo.physicsBody.contactTestBitMask = kCCBallCategory | kCCShieldCategory | kCCLifeBarCategory| kCCEdgeCategory;
+    
+    // Creating the random point multiplier
+    if (!_gameOver && arc4random_uniform(6) == 0) {
+        halo.texture = [SKTexture textureWithImageNamed:@"Images/HaloX"];
+        halo.userData = [[NSMutableDictionary alloc]init];
+        [halo.userData setValue:@YES forKey:@"Multiplier"];
+    }
+    
     [_mainLayer addChild:halo];
 }
 
@@ -230,6 +238,11 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         self.score++;
         [self addExplosion:firstBody.node.position withName:@"HaloExplosion"];
         [self runAction:_explosionSound];
+        
+        // Checkin if the ball hits powerUP
+        if ([[firstBody.node.userData valueForKey:@"Multiplier"]boolValue]) {
+            self.score++;
+        }
         
         [firstBody.node removeFromParent];
         [secondBody.node removeFromParent];
