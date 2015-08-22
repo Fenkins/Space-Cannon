@@ -208,6 +208,15 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [halo.userData setValue:@YES forKey:@"Explosive"];
     }
     
+    // JUST FOR REFERENCE. We could also enumerate our halo nodes like this and count them all like so
+    int nodeCount = 1;
+    for (SKNode *node in _mainLayer.children) {
+        if ([node.name isEqualToString:@"halo"]) {
+            nodeCount++;
+            NSLog(@"Our count is %d",nodeCount);
+        }
+    }
+    
     [_mainLayer addChild:halo];
     haloObjectsCoint++;
 }
