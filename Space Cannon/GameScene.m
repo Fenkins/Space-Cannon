@@ -14,6 +14,7 @@
     SKNode *_cannon;
     SKSpriteNode *_ammoDisplay;
     SKLabelNode *_scoreLabel;
+    SKLabelNode *_pointLabel;
     BOOL _didShoot;
     SKAction *_bounceSound;
     SKAction *_deepExplosionSound;
@@ -22,6 +23,7 @@
     SKAction *_zapSound;
     BOOL _gameOver;
     NSUserDefaults *_userDefaults;
+    int haloObjectsCoint;
 }
 
 static const CGFloat SHOOT_SPEED = 1000.0f;
@@ -117,6 +119,13 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _scoreLabel.fontSize = 15;
     [self addChild:_scoreLabel];
     
+    // Setup score multiplyer label
+    _pointLabel = [SKLabelNode labelNodeWithFontNamed:@"DIN Alternate"];
+    _pointLabel.position = CGPointMake(15.0, 30.0);
+    _pointLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+    _pointLabel.fontSize = 15;
+    [self addChild:_pointLabel];
+    
     // Setup sounds
     _bounceSound = [SKAction playSoundFileNamed:@"Bounce.caf" waitForCompletion:NO];
     _deepExplosionSound = [SKAction playSoundFileNamed:@"DeepExplosion.caf" waitForCompletion:NO];
@@ -133,9 +142,12 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     // If we will not set it here, initialization of the scores in newGame method will come with a HUUUUGE delay
     self.ammo = 5;
     self.score = 0;
+    self.pointValue = 1;
     _gameOver = YES;
+    haloObjectsCoint = 0;
     
     _scoreLabel.hidden = YES;
+    _pointLabel.hidden = YES;
     
     // Load top score
     _userDefaults = [NSUserDefaults standardUserDefaults];
@@ -152,6 +164,11 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
 -(void)setScore:(int)score {
     _score = score;
     _scoreLabel.text = [NSString stringWithFormat:@"Score: %d", score];
+}
+
+-(void)setPointValue:(int)pointValue {
+    _pointValue = pointValue;
+    _pointLabel.text = [NSString stringWithFormat:@"Points multiplier: %d",pointValue];
 }
 
 -(void)spawnHalo{
@@ -184,7 +201,15 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [halo.userData setValue:@YES forKey:@"Multiplier"];
     }
     
+    // Creating the bomb
+    if (!_gameOver && haloObjectsCoint >= 4) {
+        halo.texture = [SKTexture textureWithImageNamed:@"Images/HaloBomb"];
+        halo.userData = [[NSMutableDictionary alloc]init];
+        [halo.userData setValue:@YES forKey:@"Explosive"];
+    }
+    
     [_mainLayer addChild:halo];
+    haloObjectsCoint++;
 }
 
 -(void)shoot {
@@ -235,13 +260,19 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     }
     if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCBallCategory) {
         // Collision between halo and the ball
-        self.score++;
+        self.score += _pointValue;
+        haloObjectsCoint--;
         [self addExplosion:firstBody.node.position withName:@"HaloExplosion"];
         [self runAction:_explosionSound];
         
         // Checkin if the ball hits powerUP
         if ([[firstBody.node.userData valueForKey:@"Multiplier"]boolValue]) {
-            self.score++;
+            self.pointValue++;
+        }
+        
+        // Checkin if the ball hits bomb
+        if ([[firstBody.node.userData valueForKey:@"Explosive"]boolValue]) {
+            [self removeAllHalos];
         }
         
         [firstBody.node removeFromParent];
@@ -252,6 +283,14 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [self addExplosion:firstBody.node.position withName:@"HaloExplosion"];
         [self runAction:_explosionSound];
 
+        // Resetting multiplier upon the shield impact
+        self.pointValue = 1;
+        haloObjectsCoint--;
+        
+        if ([[firstBody.node.userData valueForKey:@"Explosive"]boolValue]) {
+            [self gameOver];
+        }
+        
         // This line will drop halo collision detection after it hits the shield, so it wont hit another one before its being removed.
         // So to summerize - this line makes halo remove only one shield at a time
         firstBody.categoryBitMask = 0;
@@ -309,6 +348,9 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     [_mainLayer enumerateChildNodesWithName:@"shield" usingBlock:^(SKNode *node, BOOL *stop) {
         [node removeFromParent];
     }];
+    [_mainLayer enumerateChildNodesWithName:@"LifeBar" usingBlock:^(SKNode *node, BOOL *stop) {
+        [node removeFromParent];
+    }];
     
     _menu.score = self.score;
     if (self.score > _menu.topScore) {
@@ -319,6 +361,15 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _menu.hidden = NO;
     _gameOver = YES;
     _scoreLabel.hidden = YES;
+    _pointLabel.hidden = YES;
+}
+
+-(void)removeAllHalos {
+    [_mainLayer enumerateChildNodesWithName:@"halo" usingBlock:^(SKNode *node, BOOL *stop) {
+        [self addExplosion:node.position withName:@"HaloExplosion"];
+        [node removeFromParent];
+    }];
+    haloObjectsCoint = 0;
 }
 
 -(void)newGame {
@@ -339,6 +390,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     
     // Setting up the life bar
     SKSpriteNode *lifeBar = [SKSpriteNode spriteNodeWithImageNamed:@"Images/BlueBar"];
+    lifeBar.name = @"LifeBar";
     lifeBar.position = CGPointMake(self.size.width * 0.5, 70);
     lifeBar.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:CGPointMake(-lifeBar.size.width * 0.5, 0) toPoint:CGPointMake(lifeBar.size.width * 0.5, 0)];
     lifeBar.physicsBody.categoryBitMask = kCCLifeBarCategory;
@@ -348,9 +400,12 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     [self actionForKey:@"SpawnHalo"].speed = 1.0;
     self.ammo = 5;
     self.score = 0;
+    self.pointValue = 1;
+    _pointLabel.hidden = NO;
     _scoreLabel.hidden = NO;
     _gameOver = NO;
     _menu.hidden = YES;
+    haloObjectsCoint = 0;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
