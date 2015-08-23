@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>0CCBE149-4D1A-4280-9A5F-D964279B6327</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Space Cannon</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>472E224A30813BE4CC1061FAB44741211AF8B4B5</key>
 		<string>https://github.com/Fenkins/Space-Cannon.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Space Cannon.xcodeproj/project.xcworkspace</string>
+	<string>Space Cannon.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>472E224A30813BE4CC1061FAB44741211AF8B4B5</key>

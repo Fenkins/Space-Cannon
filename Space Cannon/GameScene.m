@@ -24,6 +24,7 @@
     BOOL _gameOver;
     NSUserDefaults *_userDefaults;
     int haloObjectsCoint;
+    NSMutableArray *_shieldPool;
 }
 
 static const CGFloat SHOOT_SPEED = 1000.0f;
@@ -152,6 +153,20 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     // Load top score
     _userDefaults = [NSUserDefaults standardUserDefaults];
     _menu.topScore = [_userDefaults integerForKey:kCCKeyTopScore];
+    
+    // Initializing shields
+    _shieldPool = [[NSMutableArray alloc]init];
+    // Setup shields
+    for (int i=0; i<6; i++) {
+        SKSpriteNode *shield = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Block"];
+        shield.name = @"shield";
+        shield.position = CGPointMake(35+(50*i), 90);
+        shield.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(shield.size.width, shield.size.height)];
+        shield.physicsBody.categoryBitMask = kCCShieldCategory;
+        // We dont want our shield to move
+        shield.physicsBody.collisionBitMask = 0;
+        [_shieldPool addObject:shield];
+    }
 }
 
 -(void)setAmmo:(int)ammo {
@@ -208,14 +223,15 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [halo.userData setValue:@YES forKey:@"Explosive"];
     }
     
-    // JUST FOR REFERENCE. We could also enumerate our halo nodes like this and count them all like so
+    // START of reference block
+    // JUST FOR REFERENCE. We could also enumerate our halo nodes like this and count them all like so. (we could safely get rid of that block)
     int nodeCount = 1;
     for (SKNode *node in _mainLayer.children) {
         if ([node.name isEqualToString:@"halo"]) {
             nodeCount++;
-            NSLog(@"Our count is %d",nodeCount);
         }
     }
+    // END of reference block
     
     [_mainLayer addChild:halo];
     haloObjectsCoint++;
@@ -281,6 +297,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         
         // Checkin if the ball hits bomb
         if ([[firstBody.node.userData valueForKey:@"Explosive"]boolValue]) {
+            firstBody.node.name = nil;
             [self removeAllHalos];
         }
         
@@ -305,6 +322,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         firstBody.categoryBitMask = 0;
         
         [firstBody.node removeFromParent];
+        [_shieldPool addObject:secondBody.node];
         [secondBody.node removeFromParent];
     }
     if (firstBody.categoryBitMask == kCCHaloCategory && secondBody.categoryBitMask == kCCLifeBarCategory) {
@@ -355,6 +373,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [node removeFromParent];
     }];
     [_mainLayer enumerateChildNodesWithName:@"shield" usingBlock:^(SKNode *node, BOOL *stop) {
+        [_shieldPool addObject:node];
         [node removeFromParent];
     }];
     [_mainLayer enumerateChildNodesWithName:@"LifeBar" usingBlock:^(SKNode *node, BOOL *stop) {
@@ -385,16 +404,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     
     [_mainLayer removeAllChildren];
     
-    // Setup shields
-    for (int i=0; i<6; i++) {
-        SKSpriteNode *shield = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Block"];
-        shield.name = @"shield";
-        shield.position = CGPointMake(35+(50*i), 90);
-        [_mainLayer addChild:shield];
-        shield.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(shield.size.width, shield.size.height)];
-        shield.physicsBody.categoryBitMask = kCCShieldCategory;
-        // We dont want our shield to move
-        shield.physicsBody.collisionBitMask = 0;
+    // Adding shields from the array
+    while (_shieldPool.count > 0) {
+        [_mainLayer addChild:[_shieldPool objectAtIndex:0]];
+        [_shieldPool removeObjectAtIndex:0];
     }
     
     // Setting up the life bar
