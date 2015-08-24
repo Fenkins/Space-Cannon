@@ -38,6 +38,7 @@ static const uint32_t kCCBallCategory       = 0x1 << 1;
 static const uint32_t kCCEdgeCategory       = 0x1 << 2;
 static const uint32_t kCCShieldCategory     = 0x1 << 3;
 static const uint32_t kCCLifeBarCategory    = 0x1 << 4;
+static const uint32_t kCCShieldUPCategory   = 0x1 << 5;
 
 static NSString *const kCCKeyTopScore = @"TopScore";
 
@@ -100,6 +101,11 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     SKAction *spawnHalo = [SKAction sequence:@[[SKAction waitForDuration:2 withRange:1],
                                                [SKAction performSelector:@selector(spawnHalo) onTarget:self]]];
     [self runAction:[SKAction repeatActionForever:spawnHalo]withKey:@"SpawnHalo"];
+    
+    // Create spawn shield powerup
+    SKAction *spawnShieldPowerUP = [SKAction sequence:@[[SKAction waitForDuration:15 withRange:4],
+                                                        [SKAction performSelector:@selector(spawnShieldPowerUp) onTarget:self]]];
+    [self runAction:[SKAction repeatActionForever:spawnShieldPowerUP]];
     
     // Setup ammo
     _ammoDisplay = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Ammo5"];
@@ -270,6 +276,22 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [_mainLayer addChild:ball];
     }
     
+}
+
+-(void)spawnShieldPowerUp {
+    if (_shieldPool.count > 0) {
+        SKSpriteNode *shieldUP = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Block"];
+        shieldUP.name = @"shieldUP";
+        shieldUP.position = CGPointMake(self.size.width + shieldUP.size.width, randomInRange(150, self.size.height-100));
+        shieldUP.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(42, 9)];
+        shieldUP.physicsBody.categoryBitMask = kCCShieldUPCategory;
+        shieldUP.physicsBody.velocity = CGVectorMake(-100, randomInRange(-40, 40));
+        shieldUP.physicsBody.angularVelocity = M_PI;
+        shieldUP.physicsBody.linearDamping = 0.0;
+        // We dont want our shield to move
+        shieldUP.physicsBody.collisionBitMask = 0;
+        [_mainLayer addChild:shieldUP];
+    }
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
