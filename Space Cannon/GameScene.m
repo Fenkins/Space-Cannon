@@ -21,6 +21,7 @@
     SKAction *_explosionSound;
     SKAction *_laserSound;
     SKAction *_zapSound;
+    SKAction *_shieldUPSound;
     BOOL _gameOver;
     NSUserDefaults *_userDefaults;
     int haloObjectsCoint;
@@ -139,6 +140,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _explosionSound = [SKAction playSoundFileNamed:@"Explosion.caf" waitForCompletion:NO];
     _laserSound = [SKAction playSoundFileNamed:@"Laser.caf" waitForCompletion:NO];
     _zapSound = [SKAction playSoundFileNamed:@"Zap.caf" waitForCompletion:NO];
+    _shieldUPSound = [SKAction playSoundFileNamed:@"ShieldUp.caf" waitForCompletion:NO];
     
     // Setup menu
     _menu = [[CCMenu alloc]init];
@@ -261,7 +263,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         
         ball.physicsBody.categoryBitMask = kCCBallCategory;
         ball.physicsBody.collisionBitMask = kCCEdgeCategory;
-        ball.physicsBody.contactTestBitMask = kCCEdgeCategory;
+        ball.physicsBody.contactTestBitMask = kCCEdgeCategory | kCCShieldUPCategory;
         [self runAction:_laserSound];
         
         // Creating trail
@@ -373,6 +375,18 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         // Halo is bouncing off the edge
         [self runAction:_zapSound];
     }
+    if (firstBody.categoryBitMask == kCCBallCategory && secondBody.categoryBitMask == kCCShieldUPCategory) {
+        // We just hit the shield powerUP
+        if (_shieldPool.count > 0) {
+            int randomIndex = arc4random_uniform((int)_shieldPool.count);
+            [_mainLayer addChild:[_shieldPool objectAtIndex:randomIndex]];
+            // Keep in mind that each time we are adding the shield from the pool, we should aways remove one from it
+            [_shieldPool removeObjectAtIndex:randomIndex];
+            [self runAction:_shieldUPSound];
+        }
+        [firstBody.node removeFromParent];
+        [secondBody.node removeFromParent];
+    }
 }
 
 -(void)addExplosion:(CGPoint)position withName:(NSString *)name {
@@ -399,6 +413,9 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [node removeFromParent];
     }];
     [_mainLayer enumerateChildNodesWithName:@"LifeBar" usingBlock:^(SKNode *node, BOOL *stop) {
+        [node removeFromParent];
+    }];
+    [_mainLayer enumerateChildNodesWithName:@"shieldUP" usingBlock:^(SKNode *node, BOOL *stop) {
         [node removeFromParent];
     }];
     
