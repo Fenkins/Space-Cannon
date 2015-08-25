@@ -490,6 +490,13 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
             [node performSelector:@selector(updateTrail) withObject:nil afterDelay:0.0];
         }
     }];
+    
+    [_mainLayer enumerateChildNodesWithName:@"shieldUP" usingBlock:^(SKNode *node, BOOL *stop) {
+        if (node.position.x + node.frame.size.width < 0) {
+            [node removeFromParent];
+        }
+    }];
+    
     [_mainLayer enumerateChildNodesWithName:@"halo" usingBlock:^(SKNode *node, BOOL *stop) {
         if (node.position.x + node.frame.size.height < 0) {
             [node removeFromParent];
