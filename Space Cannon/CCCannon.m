@@ -13,7 +13,7 @@
 {
     self = [super init];
     if (self) {
-        _cannonPowerUpEnabled = NO;
+        _powerUpEnabled = NO;
     }
     return self;
 }

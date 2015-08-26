@@ -12,6 +12,7 @@
     SKNode *_mainLayer;
     CCMenu *_menu;
     CCCannon *_cannon;
+    CCCannon *_cannonGreen;
     SKSpriteNode *_ammoDisplay;
     SKLabelNode *_scoreLabel;
     SKLabelNode *_pointLabel;
@@ -93,11 +94,17 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _cannon = [CCCannon spriteNodeWithImageNamed:@"Images/Cannon"];
     _cannon.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMinY(self.frame));
     [self addChild:_cannon];
+    // Add green cannon
+    _cannonGreen = [CCCannon spriteNodeWithImageNamed:@"Images/GreenCannon"];
+    _cannonGreen.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMinY(self.frame));
+    [self addChild:_cannonGreen];
+    _cannonGreen.hidden = YES;
     
     // Create rotation actions
     // This will rotate the cannon for 180 to the left and back
     SKAction *rotation = [SKAction sequence:@[[SKAction rotateByAngle:M_PI duration:2],[SKAction rotateByAngle:-M_PI duration:2]]];
     [_cannon runAction:[SKAction repeatActionForever:rotation]];
+    [_cannonGreen runAction:[SKAction repeatActionForever:rotation]];
     
     // Create spawn halo actions
     SKAction *spawnHalo = [SKAction sequence:@[[SKAction waitForDuration:2 withRange:1],
@@ -120,11 +127,14 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _ammoDisplay.position = _cannon.position;
     [self addChild:_ammoDisplay];
     
-    SKAction *incrementAmmo = [SKAction sequence:@[[SKAction waitForDuration:1],
-                                                   [SKAction runBlock:^{
-        self.ammo++;
-    }]]];
-    [self runAction:[SKAction repeatActionForever:incrementAmmo]];
+    // Increasing ammo over time in case of powerUP is not active
+    if (!_cannon.powerUpEnabled) {
+        SKAction *incrementAmmo = [SKAction sequence:@[[SKAction waitForDuration:1],
+                                                       [SKAction runBlock:^{
+            self.ammo++;
+        }]]];
+        [self runAction:[SKAction repeatActionForever:incrementAmmo]];
+    }
     
     // Setup score display
     _scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"DIN Alternate"];
@@ -252,7 +262,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
 }
 
 -(void)shoot {
-    if (self.ammo > 0) {
+    if (self.ammo > 0 && !_cannon.powerUpEnabled) {
         self.ammo--;
         
         CCBall *ball = [CCBall spriteNodeWithImageNamed:@"Images/Ball"];
@@ -282,6 +292,8 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         ball.trail = ballTrail;
         
         [_mainLayer addChild:ball];
+    } else {
+
     }
     
 }
@@ -409,7 +421,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     }
     if (firstBody.categoryBitMask == kCCBallCategory && secondBody.categoryBitMask == kCCCannonUPCategory) {
         // We just hit the cannon powerUP
-        _cannon.cannonPowerUpEnabled = YES;
+        _cannon.powerUpEnabled = YES;
+        self.ammo = 5;
+        _cannon.hidden = YES;
+        _cannonGreen.hidden = NO;
     }
 }
 
@@ -520,7 +535,8 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         // Moving shooting here in order to catch up with rendering loop
         [self shoot];
         _didShoot = NO;
-    } 
+    }
+    
     [_mainLayer enumerateChildNodesWithName:@"ball" usingBlock:^(SKNode *node, BOOL *stop) {
         // Exclamation mark means inverts the statement (if !yes = if not)
         if (!CGRectContainsPoint(self.frame, node.position)) {

@@ -10,6 +10,6 @@
 
 @interface CCCannon : SKSpriteNode
 
-@property (nonatomic) BOOL cannonPowerUpEnabled;
+@property (nonatomic) BOOL powerUpEnabled;
 
 @end
