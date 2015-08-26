@@ -40,6 +40,7 @@ static const uint32_t kCCEdgeCategory       = 0x1 << 2;
 static const uint32_t kCCShieldCategory     = 0x1 << 3;
 static const uint32_t kCCLifeBarCategory    = 0x1 << 4;
 static const uint32_t kCCShieldUPCategory   = 0x1 << 5;
+static const uint32_t kCCCannonUPCategory   = 0x1 << 6;
 
 static NSString *const kCCKeyTopScore = @"TopScore";
 
@@ -290,9 +291,23 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         shieldUP.physicsBody.velocity = CGVectorMake(-100, randomInRange(-40, 40));
         shieldUP.physicsBody.angularVelocity = M_PI;
         shieldUP.physicsBody.linearDamping = 0.0;
-        // We dont want our shield to move
         shieldUP.physicsBody.collisionBitMask = 0;
         [_mainLayer addChild:shieldUP];
+    }
+}
+
+-(void)spawnCannonPowerUp {
+    if (_score > 10) {
+        SKSpriteNode *cannonUP = [SKSpriteNode spriteNodeWithImageNamed:@"Images/MultiShotPowerUp"];
+        cannonUP.name = @"cannonUP";
+        cannonUP.position = CGPointMake(self.size.width + cannonUP.size.width, randomInRange(150, self.size.height-100));
+        cannonUP.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:cannonUP.size.width/2];
+        cannonUP.physicsBody.categoryBitMask = kCCCannonUPCategory;
+        cannonUP.physicsBody.velocity = CGVectorMake(-100, randomInRange(-40, 40));
+        cannonUP.physicsBody.angularVelocity = randomInRange(-M_PI, M_PI);
+        cannonUP.physicsBody.linearDamping = 0.0;
+        cannonUP.physicsBody.collisionBitMask = 0;
+        [_mainLayer addChild:cannonUP];
     }
 }
 
