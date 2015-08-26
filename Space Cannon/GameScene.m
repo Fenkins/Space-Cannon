@@ -109,6 +109,11 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
                                                         [SKAction performSelector:@selector(spawnShieldPowerUp) onTarget:self]]];
     [self runAction:[SKAction repeatActionForever:spawnShieldPowerUP]];
     
+    // Create spawn cannon powerup
+    SKAction *spawnCannonPowerUP = [SKAction sequence:@[[SKAction waitForDuration:10 withRange:4],
+                                                        [SKAction performSelector:@selector(spawnCannonPowerUp) onTarget:self]]];
+    [self runAction:[SKAction repeatActionForever:spawnCannonPowerUP]];
+    
     // Setup ammo
     _ammoDisplay = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Ammo5"];
     _ammoDisplay.anchorPoint = CGPointMake(0.5, 0.0);
