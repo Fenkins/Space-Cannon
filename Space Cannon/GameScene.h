@@ -9,6 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "CCMenu.h"
 #import "CCBall.h"
+#import "CCCannon.h"
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate>
 

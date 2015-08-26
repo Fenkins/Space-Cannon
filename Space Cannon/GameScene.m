@@ -11,7 +11,7 @@
 @implementation GameScene {
     SKNode *_mainLayer;
     CCMenu *_menu;
-    SKNode *_cannon;
+    CCCannon *_cannon;
     SKSpriteNode *_ammoDisplay;
     SKLabelNode *_scoreLabel;
     SKLabelNode *_pointLabel;
@@ -90,7 +90,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     [self addChild:_mainLayer];
     
     // Add cannon
-    _cannon = [SKSpriteNode spriteNodeWithImageNamed:@"Images/Cannon"];
+    _cannon = [CCCannon spriteNodeWithImageNamed:@"Images/Cannon"];
     _cannon.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMinY(self.frame));
     [self addChild:_cannon];
     
@@ -269,7 +269,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         
         ball.physicsBody.categoryBitMask = kCCBallCategory;
         ball.physicsBody.collisionBitMask = kCCEdgeCategory;
-        ball.physicsBody.contactTestBitMask = kCCEdgeCategory | kCCShieldUPCategory;
+        ball.physicsBody.contactTestBitMask = kCCEdgeCategory | kCCShieldUPCategory | kCCCannonUPCategory;
         [self runAction:_laserSound];
         
         // Creating trail
@@ -406,6 +406,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         }
         [firstBody.node removeFromParent];
         [secondBody.node removeFromParent];
+    }
+    if (firstBody.categoryBitMask == kCCBallCategory && secondBody.categoryBitMask == kCCCannonUPCategory) {
+        // We just hit the cannon powerUP
+        _cannon.cannonPowerUpEnabled = YES;
     }
 }
 

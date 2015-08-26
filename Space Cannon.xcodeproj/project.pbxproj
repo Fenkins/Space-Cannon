@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA1151F31B8DEE9400C68ADC /* CCCannon.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1151F21B8DEE9400C68ADC /* CCCannon.m */; };
 		AA2D78861B7B1BAA008FBE36 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = AA2D78851B7B1BAA008FBE36 /* spark.png */; };
 		AA4767E71B80733F00C3E5F4 /* CCMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4767E61B80733F00C3E5F4 /* CCMenu.m */; };
 		AA6A08061B7F795C0075C825 /* Bounce.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA6A08001B7F795C0075C825 /* Bounce.caf */; };
@@ -45,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA1151F11B8DEE9400C68ADC /* CCCannon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCannon.h; sourceTree = "<group>"; };
+		AA1151F21B8DEE9400C68ADC /* CCCannon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCannon.m; sourceTree = "<group>"; };
 		AA2D78851B7B1BAA008FBE36 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		AA4767E51B80733F00C3E5F4 /* CCMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenu.h; sourceTree = "<group>"; };
 		AA4767E61B80733F00C3E5F4 /* CCMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMenu.m; sourceTree = "<group>"; };
@@ -150,6 +153,8 @@
 				AA4767E61B80733F00C3E5F4 /* CCMenu.m */,
 				AADB08461B86159200F67084 /* CCBall.h */,
 				AADB08471B86159200F67084 /* CCBall.m */,
+				AA1151F11B8DEE9400C68ADC /* CCCannon.h */,
+				AA1151F21B8DEE9400C68ADC /* CCCannon.m */,
 			);
 			path = "Space Cannon";
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 				AA4767E71B80733F00C3E5F4 /* CCMenu.m in Sources */,
 				AAF95E651B6922EF0089C9C9 /* GameScene.m in Sources */,
 				AAF95E5F1B6922EF0089C9C9 /* main.m in Sources */,
+				AA1151F31B8DEE9400C68ADC /* CCCannon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
