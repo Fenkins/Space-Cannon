@@ -261,41 +261,47 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     haloObjectsCoint++;
 }
 
--(void)shoot {
-    if (self.ammo > 0 && !_cannon.powerUpEnabled) {
-        self.ammo--;
-        
-        CCBall *ball = [CCBall spriteNodeWithImageNamed:@"Images/Ball"];
-        ball.name = @"ball";
-        CGVector rotationVector = radiansToVector(_cannon.zRotation);
-        ball.position = CGPointMake(_cannon.position.x + (_cannon.frame.size.width * 0.5 *rotationVector.dx),
-                                    _cannon.position.y + (_cannon.frame.size.height * 0.5 *rotationVector.dy));
-        
-        ball.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:6.0];
-        ball.physicsBody.velocity = CGVectorMake(rotationVector.dx * SHOOT_SPEED, rotationVector.dy * SHOOT_SPEED);
-        ball.physicsBody.restitution = 1.0;
-        ball.physicsBody.linearDamping = 0.0;
-        ball.physicsBody.friction = 0.0;
-        
-        ball.physicsBody.categoryBitMask = kCCBallCategory;
-        ball.physicsBody.collisionBitMask = kCCEdgeCategory;
-        ball.physicsBody.contactTestBitMask = kCCEdgeCategory | kCCShieldUPCategory | kCCCannonUPCategory;
-        [self runAction:_laserSound];
-        
-        // Creating trail
-        NSString *trailPath = [[NSBundle mainBundle]pathForResource:@"BallTrail" ofType:@"sks"];
-        SKEmitterNode *ballTrail = [NSKeyedUnarchiver unarchiveObjectWithFile:trailPath];
-        // Throwing our particles to the mainLayer, not the ball itself
-        ballTrail.targetNode = _mainLayer;
-        
-        [_mainLayer addChild:ballTrail];
-        ball.trail = ballTrail;
-        
-        [_mainLayer addChild:ball];
-    } else {
-
-    }
+-(void)createBallWithTrail {
+    CCBall *ball = [CCBall spriteNodeWithImageNamed:@"Images/Ball"];
+    ball.name = @"ball";
+    CGVector rotationVector = radiansToVector(_cannon.zRotation);
+    ball.position = CGPointMake(_cannon.position.x + (_cannon.frame.size.width * 0.5 *rotationVector.dx),
+                                _cannon.position.y + (_cannon.frame.size.height * 0.5 *rotationVector.dy));
     
+    ball.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:6.0];
+    ball.physicsBody.velocity = CGVectorMake(rotationVector.dx * SHOOT_SPEED, rotationVector.dy * SHOOT_SPEED);
+    ball.physicsBody.restitution = 1.0;
+    ball.physicsBody.linearDamping = 0.0;
+    ball.physicsBody.friction = 0.0;
+    
+    ball.physicsBody.categoryBitMask = kCCBallCategory;
+    ball.physicsBody.collisionBitMask = kCCEdgeCategory;
+    ball.physicsBody.contactTestBitMask = kCCEdgeCategory | kCCShieldUPCategory | kCCCannonUPCategory;
+    [self runAction:_laserSound];
+    
+    // Creating trail
+    NSString *trailPath = [[NSBundle mainBundle]pathForResource:@"BallTrail" ofType:@"sks"];
+    SKEmitterNode *ballTrail = [NSKeyedUnarchiver unarchiveObjectWithFile:trailPath];
+    // Throwing our particles to the mainLayer, not the ball itself
+    ballTrail.targetNode = _mainLayer;
+    
+    [_mainLayer addChild:ballTrail];
+    ball.trail = ballTrail;
+    
+    [_mainLayer addChild:ball];
+}
+
+-(void)shoot {
+    if (self.ammo > 0) {
+        self.ammo--;
+        [self performSelector:@selector(createBallWithTrail)];
+        if (_cannon.powerUpEnabled) {
+            SKAction *shootTheBall = [SKAction sequence:@[[SKAction performSelector:@selector(createBallWithTrail) onTarget:self],
+                                                          [SKAction waitForDuration:0.1]]];
+            SKAction *shootFourMoreBalls = [SKAction repeatAction:shootTheBall count:5];
+            [self runAction:shootFourMoreBalls];
+        }
+    }
 }
 
 -(void)spawnShieldPowerUp {
