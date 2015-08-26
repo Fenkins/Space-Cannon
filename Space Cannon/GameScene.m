@@ -133,7 +133,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
                                                        [SKAction runBlock:^{
             self.ammo++;
         }]]];
-        [self runAction:[SKAction repeatActionForever:incrementAmmo]];
+        [self runAction:[SKAction repeatActionForever:incrementAmmo]withKey:@"ballIncrement"];
     }
     
     // Setup score display
@@ -295,11 +295,23 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     if (self.ammo > 0) {
         self.ammo--;
         [self performSelector:@selector(createBallWithTrail)];
+        // Cannon PowerUP block
         if (_cannon.powerUpEnabled) {
             SKAction *shootTheBall = [SKAction sequence:@[[SKAction performSelector:@selector(createBallWithTrail) onTarget:self],
                                                           [SKAction waitForDuration:0.1]]];
             SKAction *shootFourMoreBalls = [SKAction repeatAction:shootTheBall count:5];
             [self runAction:shootFourMoreBalls];
+            // PowerUP ended, ran out of ammo
+            if (self.ammo == 0) {
+                _cannon.powerUpEnabled = NO;
+                SKAction *incrementAmmo = [SKAction sequence:@[[SKAction waitForDuration:1],
+                                                               [SKAction runBlock:^{
+                    self.ammo++;
+                }]]];
+                [self runAction:[SKAction repeatActionForever:incrementAmmo]withKey:@"ballIncrement"];
+                _cannon.hidden = NO;
+                _cannonGreen.hidden = YES;
+            }
         }
     }
 }
@@ -431,6 +443,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         self.ammo = 5;
         _cannon.hidden = YES;
         _cannonGreen.hidden = NO;
+        // Turning off the ammo incrementation
+        [self removeActionForKey:@"ballIncrement"];
+        [firstBody.node removeFromParent];
+        [secondBody.node removeFromParent];
     }
 }
 
@@ -509,6 +525,9 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     self.pointValue = 1;
     _pointLabel.hidden = NO;
     _scoreLabel.hidden = NO;
+    _cannon.hidden = NO;
+    _cannonGreen.hidden = YES;
+    _cannon.powerUpEnabled = NO;
     _gameOver = NO;
     _menu.hidden = YES;
     haloObjectsCoint = 0;
@@ -555,6 +574,12 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     }];
     
     [_mainLayer enumerateChildNodesWithName:@"shieldUP" usingBlock:^(SKNode *node, BOOL *stop) {
+        if (node.position.x + node.frame.size.width < 0) {
+            [node removeFromParent];
+        }
+    }];
+    
+    [_mainLayer enumerateChildNodesWithName:@"cannonUP" usingBlock:^(SKNode *node, BOOL *stop) {
         if (node.position.x + node.frame.size.width < 0) {
             [node removeFromParent];
         }
