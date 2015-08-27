@@ -486,10 +486,12 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [_userDefaults setInteger:self.score forKey:kCCKeyTopScore];
         [_userDefaults synchronize];
     }
-    _menu.hidden = NO;
     _gameOver = YES;
     _scoreLabel.hidden = YES;
     _pointLabel.hidden = YES;
+    [self runAction:[SKAction waitForDuration:1.0]completion:^{
+        [_menu show];
+    }];
 }
 
 -(void)removeAllHalos {
@@ -529,7 +531,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _cannonGreen.hidden = YES;
     _cannon.powerUpEnabled = NO;
     _gameOver = NO;
-    _menu.hidden = YES;
+    [_menu hide];
     haloObjectsCoint = 0;
 }
 
@@ -545,7 +547,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     for (UITouch *touch in touches) {
-        if (_gameOver) {
+        if (_gameOver && _menu.touchable) {
             SKNode *n = [_menu nodeAtPoint:[touch locationInNode:_menu]];
             if ([n.name isEqualToString:@"Play"]) {
                 [self newGame];
