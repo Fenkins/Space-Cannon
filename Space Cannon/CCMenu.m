@@ -52,11 +52,19 @@
 
 -(void)hide {
     self.touchable = NO;
-    self.hidden = YES;
+    
+    SKAction *animateMenu = [SKAction scaleTo:0.0 duration:0.5];
+    animateMenu.timingMode = SKActionTimingEaseIn;
+    [self runAction:animateMenu completion:^{
+        self.hidden = YES;
+        self.xScale = 1.0;
+        self.yScale = 1.0;
+    }];
 }
 
 -(void)show {
-    self.touchable = YES;
+    self.hidden = NO;
+    self.touchable = NO;
     _title.position = CGPointMake(0, 280);
     _title.alpha = 0;
     
@@ -66,7 +74,6 @@
                                                fadeIn]];
     animateTitle.timingMode = SKActionTimingEaseOut;
     [_title runAction:animateTitle];
-    self.hidden = NO;
     _scoreBoard.xScale = 4.0;
     _scoreBoard.yScale = 4.0;
     _scoreBoard.alpha = 0;
@@ -74,6 +81,13 @@
                                                     fadeIn]];
     animateScoreBoard.timingMode = SKActionTimingEaseOut;
     [_scoreBoard runAction:animateScoreBoard];
+    
+    _playButton.alpha = 0;
+    SKAction *animatePlayButton = [SKAction fadeInWithDuration:2.0];
+    animatePlayButton.timingMode = SKActionTimingEaseIn;
+    [_playButton runAction:animatePlayButton completion:^{
+        self.touchable = YES;
+    }];
 }
 
 -(void)setScore:(int)score {

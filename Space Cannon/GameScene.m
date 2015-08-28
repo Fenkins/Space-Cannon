@@ -550,8 +550,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         if (_gameOver && _menu.touchable) {
             SKNode *n = [_menu nodeAtPoint:[touch locationInNode:_menu]];
             if ([n.name isEqualToString:@"Play"]) {
-//                [self newGame];
-                [_menu show];
+                [self newGame];
             }
         }
     }
