@@ -14,6 +14,8 @@
     CCCannon *_cannon;
     CCCannon *_cannonGreen;
     SKSpriteNode *_ammoDisplay;
+    SKSpriteNode *_pauseButton;
+    SKSpriteNode *_resumeButton;
     SKLabelNode *_scoreLabel;
     SKLabelNode *_pointLabel;
     BOOL _didShoot;
@@ -136,6 +138,16 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         [self runAction:[SKAction repeatActionForever:incrementAmmo]withKey:@"ballIncrement"];
     }
     
+    // Setup pause button
+    _pauseButton = [SKSpriteNode spriteNodeWithImageNamed:@"Images/PauseButton"];
+    _pauseButton.position = CGPointMake(self.size.width - 30, 20);
+    [self addChild:_pauseButton];
+    
+    // Setup resume button
+    _resumeButton = [SKSpriteNode spriteNodeWithImageNamed:@"Images/ResumeButton"];
+    _resumeButton.position = CGPointMake(self.size.width / 2, self.size.height / 2);
+    [self addChild:_resumeButton];
+    
     // Setup score display
     _scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"DIN Alternate"];
     _scoreLabel.position = CGPointMake(15.0, 10.0);
@@ -173,6 +185,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     
     _scoreLabel.hidden = YES;
     _pointLabel.hidden = YES;
+    _pauseButton.hidden = YES;
     
     // Load top score
     _userDefaults = [NSUserDefaults standardUserDefaults];
@@ -489,6 +502,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _gameOver = YES;
     _scoreLabel.hidden = YES;
     _pointLabel.hidden = YES;
+    _pauseButton.hidden = YES;
     [self runAction:[SKAction waitForDuration:1.0]completion:^{
         [_menu show];
     }];
@@ -530,6 +544,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _cannon.hidden = NO;
     _cannonGreen.hidden = YES;
     _cannon.powerUpEnabled = NO;
+    _pauseButton.hidden = NO;
     _gameOver = NO;
     [_menu hide];
     haloObjectsCoint = 0;
