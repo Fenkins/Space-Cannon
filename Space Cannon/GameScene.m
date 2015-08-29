@@ -186,6 +186,7 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _scoreLabel.hidden = YES;
     _pointLabel.hidden = YES;
     _pauseButton.hidden = YES;
+    _resumeButton.hidden = YES;
     
     // Load top score
     _userDefaults = [NSUserDefaults standardUserDefaults];
