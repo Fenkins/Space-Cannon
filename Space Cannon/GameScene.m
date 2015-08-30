@@ -577,6 +577,15 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _gameOver = NO;
     [_menu hide];
     haloObjectsCoint = 0;
+    NSLog(@"%d",_cannon.powerUpEnabled);
+    NSLog(@"%d",self.ammo);
+    
+    // This will eliminate bug that we have when smmo stop increasing after finishing the game with powerUP active
+    SKAction *incrementAmmo = [SKAction sequence:@[[SKAction waitForDuration:1],
+                                                   [SKAction runBlock:^{
+        self.ammo++;
+    }]]];
+    [self runAction:[SKAction repeatActionForever:incrementAmmo]withKey:@"ballIncrement"];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
