@@ -244,15 +244,10 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         _pauseButton.hidden = gamePaused;
         _resumeButton.hidden = !gamePaused;
         self.paused = gamePaused;
-        switch (gamePaused) {
-            case YES:
-                [_audioPlayer stop];
-                break;
-            case NO:
-                [_audioPlayer play];
-                break;
-            default:
-                break;
+        if (gamePaused) {
+            [_audioPlayer stop];
+        } else if (!gamePaused && _menu.isMusicPlaying) {
+            [_audioPlayer play];
         }
     }
 }
