@@ -208,14 +208,14 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     }
     
     // Load the music
-    NSURL *musicTrackUrl = [[NSBundle mainBundle]URLForResource:@"ObservingTheStar" withExtension:@"caf"];
+    NSURL *musicTrackUrl = [[NSBundle mainBundle]URLForResource:@"Park Avenue 1989" withExtension:@"caf"];
     NSError *error = nil;
     _audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:musicTrackUrl error:&error];
     if (!_audioPlayer) {
         NSLog(@"Something goes wrong, audioPlayer is nil :(, %@",error);
     } else {
         _audioPlayer.numberOfLoops = -1; // Infinite loops
-        _audioPlayer.volume = 0.8;
+        _audioPlayer.volume = 0.05;
         [_audioPlayer play];
         _menu.isMusicPlaying = YES;
     }

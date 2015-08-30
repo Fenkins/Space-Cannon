@@ -19,7 +19,7 @@
 		AA91BE721B78D0AA009D9DCF /* HaloExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = AA91BE701B78D0AA009D9DCF /* HaloExplosion.sks */; };
 		AAAF2ECD1B7C8A7700C943CF /* particle.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAF2ECC1B7C8A7700C943CF /* particle.png */; };
 		AAAF2ECF1B7C9A4100C943CF /* BallEdgeBounce.sks in Resources */ = {isa = PBXBuildFile; fileRef = AAAF2ECE1B7C9A4100C943CF /* BallEdgeBounce.sks */; };
-		AABAB6001B9331AB005394AF /* ObservingTheStar.caf in Resources */ = {isa = PBXBuildFile; fileRef = AABAB5FF1B9331AB005394AF /* ObservingTheStar.caf */; };
+		AABAB6071B935771005394AF /* Park Avenue 1989.caf in Resources */ = {isa = PBXBuildFile; fileRef = AABAB6061B935771005394AF /* Park Avenue 1989.caf */; };
 		AADB08451B84D29E00F67084 /* BallTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = AADB08441B84D29E00F67084 /* BallTrail.sks */; };
 		AADB08481B86159200F67084 /* CCBall.m in Sources */ = {isa = PBXBuildFile; fileRef = AADB08471B86159200F67084 /* CCBall.m */; };
 		AAF23CB51B7C896E00126873 /* LifeBarExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = AAF23CB41B7C896E00126873 /* LifeBarExplosion.sks */; };
@@ -61,7 +61,7 @@
 		AA91BE701B78D0AA009D9DCF /* HaloExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HaloExplosion.sks; sourceTree = "<group>"; };
 		AAAF2ECC1B7C8A7700C943CF /* particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle.png; sourceTree = "<group>"; };
 		AAAF2ECE1B7C9A4100C943CF /* BallEdgeBounce.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BallEdgeBounce.sks; sourceTree = "<group>"; };
-		AABAB5FF1B9331AB005394AF /* ObservingTheStar.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ObservingTheStar.caf; sourceTree = "<group>"; };
+		AABAB6061B935771005394AF /* Park Avenue 1989.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Park Avenue 1989.caf"; sourceTree = "<group>"; };
 		AADB08441B84D29E00F67084 /* BallTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BallTrail.sks; sourceTree = "<group>"; };
 		AADB08461B86159200F67084 /* CCBall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBall.h; sourceTree = "<group>"; };
 		AADB08471B86159200F67084 /* CCBall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBall.m; sourceTree = "<group>"; };
@@ -117,12 +117,12 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
-		AABAB5FE1B9331AB005394AF /* Music */ = {
+		AABAB6031B934F63005394AF /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				AABAB5FF1B9331AB005394AF /* ObservingTheStar.caf */,
+				AABAB6061B935771005394AF /* Park Avenue 1989.caf */,
 			);
-			path = Music;
+			name = Music;
 			sourceTree = "<group>";
 		};
 		AAF95E501B6922EF0089C9C9 = {
@@ -146,7 +146,7 @@
 		AAF95E5B1B6922EF0089C9C9 /* Space Cannon */ = {
 			isa = PBXGroup;
 			children = (
-				AABAB5FE1B9331AB005394AF /* Music */,
+				AABAB6031B934F63005394AF /* Music */,
 				AAF95E891B6926F30089C9C9 /* Images */,
 				AA6A07FF1B7F795C0075C825 /* Sounds */,
 				AAF95E601B6922EF0089C9C9 /* AppDelegate.h */,
@@ -286,8 +286,8 @@
 				AA91BE721B78D0AA009D9DCF /* HaloExplosion.sks in Resources */,
 				AA6A08071B7F795C0075C825 /* DeepExplosion.caf in Resources */,
 				AA6A080A1B7F795C0075C825 /* ShieldUp.caf in Resources */,
-				AABAB6001B9331AB005394AF /* ObservingTheStar.caf in Resources */,
 				AADB08451B84D29E00F67084 /* BallTrail.sks in Resources */,
+				AABAB6071B935771005394AF /* Park Avenue 1989.caf in Resources */,
 				AA6A08081B7F795C0075C825 /* Explosion.caf in Resources */,
 				AAF23CB51B7C896E00126873 /* LifeBarExplosion.sks in Resources */,
 				AA6A08061B7F795C0075C825 /* Bounce.caf in Resources */,

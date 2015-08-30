@@ -43,6 +43,12 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    SKView *view = (SKView*)self.window.rootViewController.view;
+    ((GameScene*)view.scene).gamePaused = NO;
+    // So the thing is, once application didBecomeActive - spritekit will resume the scene for us anyway.
+    // So what are we doing here - is setting up gamePaused to no - so our "Resume" button and other stuff will behave properly
+    // If you do want for game to be onhold even after this method executed
+    // visit http://stackoverflow.com/questions/27576448/spritekit-autoresumes-and-auto-pauses-ios8 for possible solution
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
