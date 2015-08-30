@@ -12,6 +12,7 @@
 @property (nonatomic) int score;
 @property (nonatomic) int topScore;
 @property (nonatomic) BOOL touchable;
+@property (nonatomic) BOOL isMusicPlaying;
 -(void)hide;
 -(void)show;
 @end

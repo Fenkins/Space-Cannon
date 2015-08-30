@@ -14,6 +14,7 @@
     SKSpriteNode *_title;
     SKSpriteNode *_scoreBoard;
     SKSpriteNode *_playButton;
+    SKSpriteNode *_musicButton;
 }
 
 - (instancetype)init
@@ -30,8 +31,13 @@
         
         _playButton = [SKSpriteNode spriteNodeWithImageNamed:@"Images/PlayButton"];
         _playButton.name = @"Play";
-        _playButton.position = CGPointMake(0, 0);
+        _playButton.position = CGPointMake(-30, 0);
         [self addChild:_playButton];
+        
+        _musicButton = [SKSpriteNode spriteNodeWithImageNamed:@"Images/MusicOnButton"];
+        _musicButton.name = @"MusicOnOff";
+        _musicButton.position = CGPointMake(75, 0);
+        [self addChild:_musicButton];
         
         _scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"DIN Alternate"];
         _scoreLabel.fontSize = 30;
@@ -83,11 +89,32 @@
     [_scoreBoard runAction:animateScoreBoard];
     
     _playButton.alpha = 0;
-    SKAction *animatePlayButton = [SKAction fadeInWithDuration:2.0];
-    animatePlayButton.timingMode = SKActionTimingEaseIn;
-    [_playButton runAction:animatePlayButton completion:^{
+    SKAction *fadeInAnimation = [SKAction fadeInWithDuration:2.0];
+    fadeInAnimation.timingMode = SKActionTimingEaseIn;
+    [_playButton runAction:fadeInAnimation completion:^{
         self.touchable = YES;
     }];
+
+    _musicButton.alpha = 0;
+    [_musicButton runAction:fadeInAnimation completion:^{
+        self.touchable = YES;
+    }];
+}
+
+-(void)setIsMusicPlaying:(BOOL)isMusicPlaying {
+    // First we should make sure we actually setted the value
+    _isMusicPlaying = isMusicPlaying;
+
+    switch (isMusicPlaying) {
+        case YES:
+            _musicButton.texture = [SKTexture textureWithImageNamed:@"Images/MusicOnButton"];
+            break;
+        case NO:
+            _musicButton.texture = [SKTexture textureWithImageNamed:@"Images/MusicOffButton"];
+            break;
+        default:
+            break;
+    }
 }
 
 -(void)setScore:(int)score {

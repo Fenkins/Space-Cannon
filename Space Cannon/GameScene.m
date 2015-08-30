@@ -9,6 +9,7 @@
 #import "GameScene.h"
 
 @implementation GameScene {
+    AVAudioPlayer *_audioPlayer;
     SKNode *_mainLayer;
     CCMenu *_menu;
     CCCannon *_cannon;
@@ -205,6 +206,19 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         shield.physicsBody.collisionBitMask = 0;
         [_shieldPool addObject:shield];
     }
+    
+    // Load the music
+    NSURL *musicTrackUrl = [[NSBundle mainBundle]URLForResource:@"ObservingTheStar" withExtension:@"caf"];
+    NSError *error = nil;
+    _audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:musicTrackUrl error:&error];
+    if (!_audioPlayer) {
+        NSLog(@"Something goes wrong, audioPlayer is nil :(, %@",error);
+    } else {
+        _audioPlayer.numberOfLoops = -1; // Infinite loops
+        _audioPlayer.volume = 0.8;
+        [_audioPlayer play];
+        _menu.isMusicPlaying = YES;
+    }
 }
 
 -(void)setAmmo:(int)ammo {
@@ -230,6 +244,16 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
         _pauseButton.hidden = gamePaused;
         _resumeButton.hidden = !gamePaused;
         self.paused = gamePaused;
+        switch (gamePaused) {
+            case YES:
+                [_audioPlayer stop];
+                break;
+            case NO:
+                [_audioPlayer play];
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -579,7 +603,21 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
             SKNode *n = [_menu nodeAtPoint:[touch locationInNode:_menu]];
             if ([n.name isEqualToString:@"Play"]) {
                 [self newGame];
+            } else if ([n.name isEqualToString:@"MusicOnOff"]) {
+                switch ([_audioPlayer isPlaying]) {
+                    case YES:
+                        _menu.isMusicPlaying = NO;
+                        [_audioPlayer pause];
+                        break;
+                    case NO:
+                        _menu.isMusicPlaying = YES;
+                        [_audioPlayer play];
+                        break;
+                    default:
+                        break;
+                }
             }
+        // Pause - resume game section block
         } else if (!_gameOver) {
             if (self.gamePaused) {
                 if ([_resumeButton containsPoint:[touch locationInNode:_resumeButton.parent]]) {

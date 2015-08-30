@@ -10,6 +10,7 @@
 #import "CCMenu.h"
 #import "CCBall.h"
 #import "CCCannon.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate>
 
