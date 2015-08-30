@@ -224,6 +224,13 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     _pointLabel.text = [NSString stringWithFormat:@"Points multiplier: %d",pointValue];
 }
 
+-(void)setGamePaused:(BOOL)gamePaused {
+    _gamePaused = gamePaused;
+    _pauseButton.hidden = gamePaused;
+    _resumeButton.hidden = !gamePaused;
+    self.paused = gamePaused;
+}
+
 -(void)spawnHalo{
     // Increase spawn speed
     // This will give us action for key defined earlier
@@ -555,8 +562,11 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
 //     Called when a touch begins 
     
     for (UITouch *touch in touches) {
-        if (!_gameOver) {
-            _didShoot = YES;
+        if (!_gameOver && !self.gamePaused) {
+            // We dont want to shoot when we touching the pause button
+            if (![_pauseButton containsPoint:[touch locationInNode:_pauseButton.parent]]) {
+                _didShoot = YES;
+            }
         }
     }
 }
@@ -567,6 +577,16 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
             SKNode *n = [_menu nodeAtPoint:[touch locationInNode:_menu]];
             if ([n.name isEqualToString:@"Play"]) {
                 [self newGame];
+            }
+        } else if (!_gameOver) {
+            if (self.gamePaused) {
+                if ([_resumeButton containsPoint:[touch locationInNode:_resumeButton.parent]]) {
+                    self.gamePaused = NO;
+                }
+            } else {
+                if ([_pauseButton containsPoint:[touch locationInNode:_pauseButton.parent]]) {
+                    self.gamePaused = YES;
+                }
             }
         }
     }
