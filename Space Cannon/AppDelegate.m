@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "SpriteKit/SpriteKit.h"
+#import "GameScene.h"
+
 
 @interface AppDelegate ()
 
@@ -23,6 +26,10 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    // This is casting, this is allowing us to acces our view and our scene
+    SKView *view = (SKView*)self.window.rootViewController.view;
+    ((GameScene*)view.scene).gamePaused = YES;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {

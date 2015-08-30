@@ -225,10 +225,12 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
 }
 
 -(void)setGamePaused:(BOOL)gamePaused {
-    _gamePaused = gamePaused;
-    _pauseButton.hidden = gamePaused;
-    _resumeButton.hidden = !gamePaused;
-    self.paused = gamePaused;
+    if (!_gameOver) {
+        _gamePaused = gamePaused;
+        _pauseButton.hidden = gamePaused;
+        _resumeButton.hidden = !gamePaused;
+        self.paused = gamePaused;
+    }
 }
 
 -(void)spawnHalo{
