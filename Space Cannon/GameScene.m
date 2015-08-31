@@ -47,6 +47,7 @@ static const uint32_t kCCShieldUPCategory   = 0x1 << 5;
 static const uint32_t kCCCannonUPCategory   = 0x1 << 6;
 
 static NSString *const kCCKeyTopScore = @"TopScore";
+static NSString *const kCCMusicPlaying = @"MusicPlaying";
 
 static inline CGVector radiansToVector(CGFloat radians) {
     CGVector vector;
@@ -216,8 +217,13 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     } else {
         _audioPlayer.numberOfLoops = -1; // Infinite loops
         _audioPlayer.volume = 0.05;
-        [_audioPlayer play];
-        _menu.isMusicPlaying = YES;
+        if ([_userDefaults boolForKey:kCCMusicPlaying]) {
+            [_audioPlayer play];
+            _menu.isMusicPlaying = YES;
+        } else {
+            [_audioPlayer stop];
+            _menu.isMusicPlaying = NO;
+        }
     }
 }
 

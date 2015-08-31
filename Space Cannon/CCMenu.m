@@ -15,7 +15,9 @@
     SKSpriteNode *_scoreBoard;
     SKSpriteNode *_playButton;
     SKSpriteNode *_musicButton;
+    NSUserDefaults *_userDefaults;
 }
+static NSString *const kCCMusicPlaying = @"MusicPlaying";
 
 - (instancetype)init
 {
@@ -104,13 +106,17 @@
 -(void)setIsMusicPlaying:(BOOL)isMusicPlaying {
     // First we should make sure we actually setted the value
     _isMusicPlaying = isMusicPlaying;
-
+    _userDefaults = [NSUserDefaults standardUserDefaults];
     switch (isMusicPlaying) {
         case YES:
             _musicButton.texture = [SKTexture textureWithImageNamed:@"Images/MusicOnButton"];
+            [_userDefaults setBool:YES forKey:kCCMusicPlaying];
+            [_userDefaults synchronize];
             break;
         case NO:
             _musicButton.texture = [SKTexture textureWithImageNamed:@"Images/MusicOffButton"];
+            [_userDefaults setBool:NO forKey:kCCMusicPlaying];
+            [_userDefaults synchronize];
             break;
         default:
             break;
