@@ -541,6 +541,14 @@ static inline CGFloat randomInRange (CGFloat low, CGFloat high) {
     [self runAction:[SKAction waitForDuration:1.0]completion:^{
         [_menu show];
     }];
+    
+    // Restoring ammo increasing after gameOver
+    [self removeActionForKey:@"ballIncrement"];
+    SKAction *incrementAmmo = [SKAction sequence:@[[SKAction waitForDuration:1],
+                                                   [SKAction runBlock:^{
+        self.ammo++;
+    }]]];
+    [self runAction:[SKAction repeatActionForever:incrementAmmo]withKey:@"ballIncrement"];
 }
 
 -(void)removeAllHalos {
